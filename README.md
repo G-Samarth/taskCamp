@@ -1,0 +1,3 @@
+#TaskCamp
+
+Web application for task and team scheduling. Three types of users: Manager, Lead, Resource. Manager can add,modify and delete projects. Lead can break project(s) into tasks and assign team (multiple resources) as well as individual resource. Resource should get his list of task to be completed. Resource can also request new task or change in current task, the approval for new task or change in current task should go to Lead. Each task can have categories: New, In-process, Completed and Backlog. A live report should be generated at the Manager dashboard. Lead should have all visibility over Resource Tasks and Manager should have complete visibility.

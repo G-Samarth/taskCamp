@@ -29,22 +29,6 @@ router.post(
             ).isLength({
                 min: 50,
             }),
-            check(
-                'resources.*.resourceEmail',
-                'Please include a valid email'
-            ).isEmail(),
-            check(
-                'resources.*.taskTitle',
-                'Please enter at least 5 characters'
-            ).isLength({
-                min: 5,
-            }),
-            check(
-                'resources.*.taskDescription',
-                'Please enter at least 10 characters'
-            ).isLength({
-                min: 10,
-            }),
         ],
     ],
     async (req, res) => {
@@ -54,7 +38,7 @@ router.post(
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { title, description, leadEmail, resources } = req.body;
+        const { title, description, leadEmail } = req.body;
 
         try {
             const assignedBy = req.user.id;
@@ -66,12 +50,11 @@ router.post(
                 description,
                 assignedBy,
                 assignedTo,
-                resources,
             });
 
             await project.save();
 
-            res.json({ msg: 'Project Added' });
+            res.json({ msg: 'Project Created' });
         } catch (error) {
             console.log(error);
             res.status(500).json({ errors: [{ msg: 'Server Error' }] });
@@ -91,6 +74,10 @@ router.get('/projects', [auth, checkManager], async (req, res) => {
                 return res
                     .status(500)
                     .json({ errors: [{ msg: 'Mongo Server Error' }] });
+            }
+
+            if (!projects.length) {
+                return res.json({ msg: 'No Projects Found' });
             }
 
             res.json(projects);

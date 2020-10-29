@@ -123,7 +123,8 @@ router.post(
                     .json({ errors: [{ msg: 'User Not Authorized' }] });
             }
 
-            const projectResources = await Promise.all(
+            let projectResources = project.resources;
+            await Promise.all(
                 resources.map(async (resource) => {
                     const {
                         resourceEmail,
@@ -137,7 +138,8 @@ router.post(
                     user = await User.findOne({ email: resourceEmail });
 
                     newResource.user = user.id;
-                    return newResource;
+
+                    projectResources.push(newResource);
                 })
             );
 
@@ -145,6 +147,47 @@ router.post(
             await project.save();
 
             res.json({ msg: 'Resources Added' });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+        }
+    }
+);
+
+// @route    DELETE /lead/projects/:projectId/:id
+// @desc     Delete Resource
+// @access   Private
+router.delete(
+    '/projects/:projectId/:id',
+    [auth, checkLead, checkObjectId('projectId')],
+    async (req, res) => {
+        const user = req.user.id;
+        const projectId = req.params.projectId;
+        const resourceId = req.params.id;
+
+        const project = await Project.findById(projectId);
+
+        if (!project) {
+            return res
+                .status(404)
+                .json({ errors: [{ msg: 'Project Not Found' }] });
+        }
+
+        try {
+            if (project.assignedTo.toString() !== user) {
+                return res
+                    .status(401)
+                    .json({ errors: [{ msg: 'User Not Authorized' }] });
+            }
+
+            const updatedResources = project.resources.filter(
+                (resource) => resource.user.toString() !== resourceId
+            );
+
+            project.resources = updatedResources;
+            await project.save();
+
+            res.json({ msg: 'Resource Deleted' });
         } catch (error) {
             console.log(error);
             res.status(500).json({ errors: [{ msg: 'Server Error' }] });

@@ -7,6 +7,7 @@ const checkManager = require('../middleware/manager');
 const User = require('../models/user');
 const Project = require('../models/project');
 const checkObjectId = require('../middleware/checkObjectId');
+const user = require('../models/user');
 
 const router = express.Router();
 
@@ -54,6 +55,19 @@ router.post(
 
             await project.save();
 
+            const projectId = { project: project.id };
+            const manager = await User.findById(assignedBy);
+
+            let newProject = manager.projects;
+            newProject.unshift(projectId);
+            manager.projects = newProject;
+            await manager.save();
+
+            newProject = lead.projects;
+            newProject.unshift(projectId);
+            lead.projects = newProject;
+            await lead.save();
+
             res.json({ msg: 'Project Created' });
         } catch (error) {
             console.log(error);
@@ -66,28 +80,28 @@ router.post(
 // @desc     Get all projects
 // @access   Private
 router.get('/projects', [auth, checkManager], async (req, res) => {
-    const user = req.user.id;
-
     try {
-        Project.find({ assignedBy: user }, (err, projects) => {
-            if (err) {
-                return res
-                    .status(500)
-                    .json({ errors: [{ msg: 'Mongo Server Error' }] });
-            }
+        const user = await User.findById(req.user.id);
 
-            if (!projects.length) {
-                return res.json({ msg: 'No Projects Found' });
-            }
+        const allProjects = await Promise.all(
+            user.projects.map(async (proj) => {
+                const projectId = proj.project;
 
-            res.json(projects);
-        });
+                const project = await Project.findById(projectId);
+
+                return project;
+            })
+        );
+
+        if (!allProjects.length) {
+            return res.json({ msg: 'No Projects' });
+        }
+
+        res.json(allProjects);
     } catch (error) {
         console.log(error);
         res.status(500).json({ errors: [{ msg: 'Server Error' }] });
     }
-
-    //Might need to convert ids to user object
 });
 
 // @route    GET /manager/projects/:projectId
@@ -147,6 +161,21 @@ router.delete(
                     .status(401)
                     .json({ errors: [{ msg: 'User Not Authorized' }] });
             }
+
+            const manager = await User.findById(user);
+            const lead = await User.findById(project.assignedTo);
+
+            let updatedProjects = manager.projects.filter(
+                (project) => project.project.toString() !== projectId
+            );
+            manager.projects = updatedProjects;
+            await manager.save();
+
+            updatedProjects = lead.projects.filter(
+                (project) => project.project.toString() !== projectId
+            );
+            lead.projects = updatedProjects;
+            await lead.save();
 
             await project.remove();
 

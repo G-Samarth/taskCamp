@@ -14,22 +14,24 @@ const router = express.Router();
 // @desc     Get all Projects
 // @access   Private
 router.get('/projects', [auth, checkLead], async (req, res) => {
-    const user = req.user.id;
-
     try {
-        Project.find({ assignedTo: user }, (err, projects) => {
-            if (err) {
-                return res
-                    .status(500)
-                    .json({ errors: [{ msg: 'Mongo Server Error' }] });
-            }
+        const user = await User.findById(req.user.id);
 
-            if (!projects.length) {
-                return res.json({ msg: 'No Projects Found' });
-            }
+        const allProjects = await Promise.all(
+            user.projects.map(async (proj) => {
+                const projectId = proj.project;
 
-            res.json(projects);
-        });
+                const project = await Project.findById(projectId);
+
+                return project;
+            })
+        );
+
+        if (!allProjects.length) {
+            return res.json({ msg: 'No Projects' });
+        }
+
+        res.json(allProjects);
     } catch (error) {
         console.log(error);
         res.status(500).json({ errors: [{ msg: 'Server Error' }] });
@@ -137,8 +139,12 @@ router.post(
 
                     user = await User.findOne({ email: resourceEmail });
 
-                    newResource.user = user.id;
+                    const newProject = user.projects;
+                    newProject.unshift({ project: project.id });
+                    user.projects = newProject;
+                    await user.save();
 
+                    newResource.user = user.id;
                     projectResources.push(newResource);
                 })
             );
@@ -180,10 +186,16 @@ router.delete(
                     .json({ errors: [{ msg: 'User Not Authorized' }] });
             }
 
+            const resource = await User.findById(resourceId);
+            const updatedProjects = resource.projects.filter(
+                (project) => project.project.toString() !== projectId
+            );
+            resource.projects = updatedProjects;
+            await resource.save();
+
             const updatedResources = project.resources.filter(
                 (resource) => resource.user.toString() !== resourceId
             );
-
             project.resources = updatedResources;
             await project.save();
 

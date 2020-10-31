@@ -6,6 +6,7 @@ const app = express();
 const authRoutes = require('./routes/auth');
 const managerRoutes = require('./routes/manager');
 const leadRoutes = require('./routes/lead');
+const resourceRoutes = require('./routes/resource');
 
 dataBase();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/manager', managerRoutes);
 app.use('/lead', leadRoutes);
+app.use('/resource', resourceRoutes);
 
 const port = process.env.PORT || 5000;
 

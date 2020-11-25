@@ -1,0 +1,289 @@
+@import 'config';
+@import 'utilities';
+@import 'form';
+@import 'popup';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 10px;
+}
+
+body {
+    font-family: 'Big Shoulders Text', cursive;
+    font-family: 'Raleway', sans-serif;
+    line-height: 1.6;
+    background-color: #fff;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    width: 100%;
+}
+
+//Navbar
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 3.2rem;
+    opacity: 0.9;
+    width: 100%;
+
+    .logo {
+        font-family: 'Big Shoulders Text';
+        font-weight: 500;
+    }
+
+    ul {
+        display: flex;
+
+        & :not(:last-child) {
+            margin-right: 1.5rem;
+        }
+    }
+
+    a {
+        color: $light-color;
+        padding: 0.5rem;
+        margin: 0 0.3rem;
+
+        &:hover {
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+}
+
+//Landing
+.landing {
+    background: url('https://d2w1ef2ao9g8r9.cloudfront.net/images/break-even-point.jpg?mtime=20200529165826&focal=none')
+        no-repeat center center/cover fixed;
+    height: 100vh;
+
+    &-inner {
+        color: #ddd;
+        width: 75%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        text-align: center;
+    }
+}
+
+//Profile Page
+.profile {
+    display: flex;
+    background-color: #f4f4f2;
+    padding: 4rem;
+    margin-bottom: 5rem;
+
+    &-img {
+        margin-right: 4rem;
+        width: 18%;
+    }
+
+    &-info {
+        font-size: 1.5rem;
+        font-weight: 500;
+
+        h1 {
+            margin-bottom: 0.25rem;
+        }
+    }
+}
+
+.project {
+    display: flex;
+    background-color: $primary-color;
+    padding: 3rem 5rem;
+    margin-bottom: 2rem;
+    color: $light-color;
+    transition: all 0.2s;
+
+    &:hover {
+        cursor: pointer;
+        background-color: darken($primary-color, 5%);
+    }
+
+    .lead-img {
+        margin-right: 4rem;
+        width: 25%;
+    }
+
+    &-info {
+        font-size: 1.5rem;
+        font-weight: 500;
+
+        .email {
+            margin-bottom: 1rem;
+        }
+    }
+
+    &-add {
+        background-color: $primary-color;
+        padding: 2rem;
+        color: $light-color;
+        text-align: center;
+        transition: all 0.2s;
+
+        &:hover {
+            cursor: pointer;
+            background-color: lighten($primary-color, 5%);
+        }
+
+        i {
+            font-weight: 900;
+            font-size: 4rem;
+        }
+    }
+}
+
+//Project Page
+.project-section {
+    .md {
+        text-align: center;
+    }
+
+    &-top {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        grid-gap: 2rem;
+
+        &-info,
+        &-lead {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .lead {
+                font-weight: 400;
+            }
+        }
+
+        &-lead {
+            justify-content: space-evenly;
+            text-align: center;
+            img {
+                width: 35%;
+            }
+        }
+    }
+}
+
+.resource-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 1.5rem;
+    row-gap: 2rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+
+    &-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 35rem;
+
+        &-info {
+            text-align: center;
+
+            img {
+                max-width: 12.5rem;
+            }
+        }
+
+        &-task {
+            align-self: start;
+        }
+    }
+
+    &-add {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 7.5rem;
+        color: rgb(194, 191, 191);
+        height: 100%;
+        transition: all 0.2s;
+
+        &:hover {
+            background-color: rgb(216, 216, 216);
+        }
+    }
+}
+
+//Footer
+.footer {
+    font-size: 1.5rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    grid-gap: 5rem;
+    padding: 3rem 20rem;
+    opacity: 0.9;
+    width: 100%;
+    color: $light-color;
+    // position: fixed;
+    // bottom: 0;
+    // left: 0;
+
+    &-1 {
+        .logo {
+            font-family: 'Big Shoulders Text';
+            font-weight: 500;
+            font-size: 3.2rem;
+            margin-bottom: 2rem;
+
+            a {
+                color: $light-color;
+
+                &:hover {
+                    color: #fff;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    &-2,
+    &-3 {
+        display: flex;
+        flex-direction: column;
+        height: 50%;
+        justify-content: space-between;
+        margin-top: 7.2rem;
+    }
+
+    &-4 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 7.2rem;
+
+        &-icons {
+            display: flex;
+            justify-content: space-between;
+            width: 20%;
+        }
+    }
+}

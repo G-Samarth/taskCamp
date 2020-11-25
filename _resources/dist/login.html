@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script
+            src="https://kit.fontawesome.com/59b0d39916.js"
+            crossorigin="anonymous"
+        ></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800;900&family=Big+Shoulders+Text:wght@500&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/style.min.css" />
+        <title>TaskCamp</title>
+    </head>
+    <body>
+        <div class="navbar bg-dark">
+            <h1 class="logo">
+                <a href="landing.html">TaskCamp</a>
+            </h1>
+            <nav>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+        <section class="container">
+            <div class="alert alert-danger border-3 blur-sm">
+                Invalid Credentials
+            </div>
+            <div class="form-background p-4 my-2 border-3 blur-lg">
+                <h1 class="lg text-dark">Sign In</h1>
+                <p class="lead">
+                    <i class="fas fa-user"></i> Sign into Your Account
+                </p>
+                <form class="form" action="create-profile.html">
+                    <div class="form-group">
+                        <input
+                            class="blur-sm"
+                            type="email"
+                            placeholder="Email Address"
+                            name="email"
+                        />
+                        <label for="email" class="form-label"
+                            >Email Address</label
+                        >
+                    </div>
+                    <div class="form-group">
+                        <input
+                            class="blur-sm"
+                            type="password"
+                            placeholder="Password"
+                            name="password"
+                            minlength="6"
+                        />
+                        <label for="password" class="form-label"
+                            >Password</label
+                        >
+                    </div>
+                    <input
+                        type="submit"
+                        class="btn btn-primary blur-sm"
+                        value="Login"
+                    />
+                </form>
+            </div>
+            <div class="form-text">
+                <p class="sm">
+                    Don't have an account? <a href="register.html">Sign Up</a>
+                </p>
+            </div>
+        </section>
+
+        <footer class="footer bg-dark">
+            <div class="footer-1 my-1">
+                <h1 class="logo">
+                    <a href="landing.html">TaskCamp</a>
+                </h1>
+                <p>
+                    <i class="fas fa-map-marker-alt p-1"></i>Mayur Vihar Phase
+                    II, Delhi, India
+                </p>
+                <p><i class="fas fa-phone-alt p-1"></i>+91-543-123-4567</p>
+                <p><i class="fas fa-envelope p-1"></i>example@taskcamp.com</p>
+            </div>
+            <div class="footer-2 my-1">
+                <p>About Us</p>
+                <p>What We Do</p>
+                <p>FAQ</p>
+            </div>
+            <div class="footer-3 my-1">
+                <p>Career</p>
+                <p>Blog</p>
+                <p>Contact Us</p>
+            </div>
+            <div class="footer-4 my-1">
+                <div class="footer-4-icons">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-twitter mr-3 ml-3"></i>
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <p>&copy; Copyright 2020 TaskCamp by Samarth Ghulyani</p>
+            </div>
+        </footer>
+    </body>
+</html>

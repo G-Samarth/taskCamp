@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script
+            src="https://kit.fontawesome.com/59b0d39916.js"
+            crossorigin="anonymous"
+        ></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800;900&family=Big+Shoulders+Text:wght@500&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/style.min.css" />
+        <title>TaskCamp</title>
+    </head>
+    <body>
+        <div class="navbar bg-dark">
+            <h1 class="logo">
+                <a href="landing.html">TaskCamp</a>
+            </h1>
+            <nav>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+        <section class="container">
+            <div class="form-project p-3 bg-white border-5">
+                <h1 class="lead text-dark text-align">Create a new Project</h1>
+                <form class="form-add" action="#">
+                    <label for="task-title" class="form-add-label"
+                        >Task Title</label
+                    >
+                    <input
+                        class="form-add-input blur-sm"
+                        type="text"
+                        placeholder="Task Title"
+                        name="task-title"
+                        required
+                    />
+
+                    <label for="task-desc" class="form-add-label"
+                        >Task Description</label
+                    >
+                    <textarea
+                        class="form-add-input blur-sm"
+                        placeholder="Task Description"
+                        name="task-desc"
+                        rows="10"
+                        required
+                    ></textarea>
+
+                    <label for="email" class="form-add-label"
+                        >Lead's Email</label
+                    >
+                    <input
+                        class="form-add-input blur-sm"
+                        type="email"
+                        placeholder="Email Address"
+                        name="email"
+                    />
+
+                    <input
+                        type="submit"
+                        class="btn btn-primary blur-sm"
+                        value="Add"
+                    />
+                </form>
+            </div>
+        </section>
+        <footer class="footer bg-dark">
+            <div class="footer-1 my-1">
+                <h1 class="logo">
+                    <a href="landing.html">TaskCamp</a>
+                </h1>
+                <p>
+                    <i class="fas fa-map-marker-alt p-1"></i>Mayur Vihar Phase
+                    II, Delhi, India
+                </p>
+                <p><i class="fas fa-phone-alt p-1"></i>+91-543-123-4567</p>
+                <p><i class="fas fa-envelope p-1"></i>example@taskcamp.com</p>
+            </div>
+            <div class="footer-2 my-1">
+                <p>About Us</p>
+                <p>What We Do</p>
+                <p>FAQ</p>
+            </div>
+            <div class="footer-3 my-1">
+                <p>Career</p>
+                <p>Blog</p>
+                <p>Contact Us</p>
+            </div>
+            <div class="footer-4 my-1">
+                <div class="footer-4-icons">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-twitter mr-3 ml-3"></i>
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <p>&copy; Copyright 2020 TaskCamp by Samarth Ghulyani</p>
+            </div>
+        </footer>
+    </body>
+</html>

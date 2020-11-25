@@ -1,0 +1,63 @@
+.popup {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba($dark-color, 0.9);
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+
+    &-card {
+        @include absCenter;
+        min-width: 30%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+        transition: all 0.4s 0.2s;
+
+        &-info {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 3rem;
+
+            img {
+                width: 15rem;
+            }
+        }
+
+        &-task {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+    }
+
+    &:target {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &:target &-card {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    &-close {
+        font-size: 4rem;
+        font-weight: 400;
+
+        &:link,
+        &:visited {
+            color: grey;
+            position: absolute;
+            top: -1rem;
+            right: 2rem;
+            display: inline-block;
+        }
+    }
+}

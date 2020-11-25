@@ -1,0 +1,109 @@
+.form-background {
+    background-image: linear-gradient(
+            105deg,
+            rgba($light-color, 0.9) 0%,
+            rgba($light-color, 0.9) 65%,
+            transparent 50%
+        ),
+        url(https://miro.medium.com/max/9204/1*IrbClBrJwKGfuSPWNFmilQ.jpeg);
+    background-size: 100%;
+}
+
+.form {
+    margin-top: 3.5rem;
+
+    &-group {
+        margin-bottom: 1.1rem;
+    }
+
+    input:not(:last-child) {
+        display: block;
+        border: none;
+        padding: 1rem 1.5rem;
+        margin-bottom: 0.5rem;
+        font-family: inherit;
+        font-weight: 500;
+        color: inherit;
+        width: 50%;
+        border-radius: 3px;
+        border-bottom: 3px solid transparent;
+        transition: all 0.2s;
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 1rem 2rem rgba($dark-color, 0.1);
+            border-bottom: 3px solid $primary-color;
+        }
+
+        &:focus:invalid {
+            border-bottom: 3px solid $danger-color;
+        }
+    }
+
+    &-label {
+        margin: 0 1.5rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        display: block;
+    }
+
+    input:placeholder-shown + &-label {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4rem);
+    }
+
+    .btn {
+        padding: 1rem 3rem;
+    }
+
+    &-text {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        a {
+            color: $primary-color;
+        }
+    }
+}
+
+.form-add {
+    text-align: center;
+
+    &-label {
+        display: block;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        margin-left: 1.5rem;
+        text-align: left;
+    }
+
+    &-input {
+        display: block;
+        border: none;
+        padding: 1rem 1.5rem;
+        margin-bottom: 2rem;
+        font-family: inherit;
+        font-weight: 500;
+        color: inherit;
+        border-radius: 3px;
+        width: 100%;
+        outline: none;
+        resize: none;
+    }
+
+    textarea::-webkit-scrollbar {
+        display: none;
+    }
+
+    .btn {
+        margin-right: 0;
+        padding: 1rem 3rem;
+    }
+}
+
+.form-project {
+    background-image: linear-gradient(to right, #fdfbfb, #ebedee);
+}

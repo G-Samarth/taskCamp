@@ -58,6 +58,23 @@
                     <div class="form-group">
                         <input
                             class="blur-sm"
+                            list="userTypes"
+                            name="userType"
+                            id="userType"
+                            placeholder="Job Title"
+                        />
+                        <datalist id="userTypes">
+                            <option value="Manager">Manager</option>
+                            <option value="Lead">Lead</option>
+                            <option value="Resource">Resource</option>
+                        </datalist>
+                        <label for="userType" class="form-label"
+                            >Job Title</label
+                        >
+                    </div>
+                    <div class="form-group">
+                        <input
+                            class="blur-sm"
                             type="password"
                             placeholder="Password"
                             name="password"

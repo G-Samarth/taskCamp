@@ -9,6 +9,8 @@ import Landing from './pages/landing';
 import Login from './pages/login';
 import Register from './pages/register';
 import Alert from './components/alert';
+import ProfilePage from './pages/profile';
+import PrivateRoute from './components/routing/private-route';
 
 import { Provider } from 'react-redux';
 import store from './redux/store';
@@ -35,6 +37,11 @@ const App = ({ location }) => {
                         <Alert />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
+                        <PrivateRoute
+                            exact
+                            path="/profile"
+                            component={ProfilePage}
+                        />
                     </section>
                 </Switch>
                 {location.pathname !== '/' && <Footer />}

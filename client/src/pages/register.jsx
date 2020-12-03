@@ -5,8 +5,6 @@ import { Link, Redirect } from 'react-router-dom';
 import { setAlert } from '../redux/alert/alert.actions';
 import { register } from '../redux/auth/auth.actions';
 
-import Button from '../components/button';
-
 const Register = ({ setAlert, register, isAuthenticated }) => {
     const [formData, setFormData] = useState({
         name: '',
@@ -31,7 +29,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     };
 
     if (isAuthenticated) {
-        return <Redirect to="/" />;
+        return <Redirect to="/profile" />;
     }
 
     return (
@@ -116,9 +114,11 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                             Confirm Password
                         </label>
                     </div>
-                    <Button type="submit" className="btn btn-primary blur-sm">
-                        Register
-                    </Button>
+                    <input
+                        type="submit"
+                        class="btn btn-primary blur-sm"
+                        value="Login"
+                    />
                 </form>
             </div>
             <div className="form-text">

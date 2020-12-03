@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 
 import { login } from '../redux/auth/auth.actions';
 
-import Button from '../components/button';
-
 const Login = ({ login, isAuthenticated }) => {
     const [formData, setFormData] = useState({
         email: '',
@@ -23,7 +21,7 @@ const Login = ({ login, isAuthenticated }) => {
     };
 
     if (isAuthenticated) {
-        return <Redirect to="/" />;
+        return <Redirect to="/profile" />;
     }
 
     return (
@@ -61,9 +59,11 @@ const Login = ({ login, isAuthenticated }) => {
                             Password
                         </label>
                     </div>
-                    <Button type="submit" className="btn btn-primary blur-sm">
-                        Login
-                    </Button>
+                    <input
+                        type="submit"
+                        class="btn btn-primary blur-sm"
+                        value="Login"
+                    />
                 </form>
             </div>
             <div className="form-text">

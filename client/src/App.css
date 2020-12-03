@@ -279,7 +279,8 @@
             transparent 50%
         ),
         url(https://miro.medium.com/max/9204/1*IrbClBrJwKGfuSPWNFmilQ.jpeg);
-    background-size: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 .form {
     margin-top: 3.5rem;
@@ -315,13 +316,9 @@
     transition: all 0.2s;
     display: block;
 }
-input:placeholder-shown + .form-label {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-4rem);
-}
 .form .btn {
     padding: 1rem 3rem;
+    margin-top: 1rem;
 }
 .form-text {
     display: flex;

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { AuthActionTypes } from './auth.types';
+import { ProfileActionTypes } from '../profile/profile.types';
 import { setAlert } from '../alert/alert.actions';
 import { setAuthToken } from './auth.utils';
 
@@ -87,6 +88,9 @@ export const login = ({ email, password }) => async (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
+    dispatch({
+        type: ProfileActionTypes.CLEAR_PROFILE,
+    });
     dispatch({
         type: AuthActionTypes.LOGOUT,
     });

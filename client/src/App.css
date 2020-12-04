@@ -648,3 +648,9 @@ img {
     justify-content: space-between;
     width: 20%;
 }
+
+.spinner {
+    width: 7rem;
+    display: block;
+    margin: auto;
+}

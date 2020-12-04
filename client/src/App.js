@@ -39,7 +39,7 @@ const App = ({ location }) => {
                         <Route exact path="/register" component={Register} />
                         <PrivateRoute
                             exact
-                            path="/profile"
+                            path="/dashboard"
                             component={ProfilePage}
                         />
                     </section>

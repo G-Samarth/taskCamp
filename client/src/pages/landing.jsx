@@ -1,9 +1,14 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Button from '../components/button';
 
-const Landing = ({ history }) => {
+const Landing = ({ history, isAuthenticated }) => {
+    if (isAuthenticated) {
+        return <Redirect to="/dashboard" />;
+    }
+
     return (
         <section className="landing">
             <div className="overlay">
@@ -40,4 +45,8 @@ const Landing = ({ history }) => {
     );
 };
 
-export default withRouter(Landing);
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default withRouter(connect(mapStateToProps)(Landing));

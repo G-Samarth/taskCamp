@@ -8,7 +8,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     return (
         <div className="navbar bg-dark">
             <h1 className="logo">
-                <Link to={isAuthenticated ? '/profile' : '/'}>TaskCamp</Link>
+                <Link to={isAuthenticated ? '/dashboard' : '/'}>TaskCamp</Link>
             </h1>
             <nav>
                 <ul>
@@ -17,9 +17,14 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
                     </li>
                     {!loading &&
                         (isAuthenticated ? (
-                            <li>
-                                <Link onClick={logout}>Logout</Link>
-                            </li>
+                            <Fragment>
+                                <li>
+                                    <Link to="/dashboard">Dashboard</Link>
+                                </li>
+                                <li>
+                                    <Link onClick={logout}>Logout</Link>
+                                </li>
+                            </Fragment>
                         ) : (
                             <Fragment>
                                 <li>

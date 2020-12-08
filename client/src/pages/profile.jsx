@@ -1,30 +1,42 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getCurrentProfile } from '../redux/profile/profile.actions';
+import { Link } from 'react-router-dom';
+
+import { getAllProjects } from '../redux/projects/projects.actions';
 
 import Spinner from '../components/spinner';
+import ProfileComponent from '../components/profile';
+import ProjectComponent from '../components/project';
 
 const ProfilePage = ({
-    getCurrentProfile,
+    getAllProjects,
     auth,
-    profile: { profile, loading },
+    projects: { projects, loading },
 }) => {
     useEffect(() => {
-        getCurrentProfile();
-    }, []);
+        getAllProjects();
+    }, [getAllProjects]);
 
-    return loading && profile === null ? (
+    return loading && projects === null ? (
         <Spinner />
     ) : (
         <Fragment>
-            <h1>Profile Page</h1>
+            <ProfileComponent />
+            {projects.map((project) => (
+                <ProjectComponent key={project._id} project={project} />
+            ))}
+            <Link to="/add-project">
+                <div className="project-add border-5 blur-lg">
+                    <i className="fas fa-plus"></i>
+                </div>
+            </Link>
         </Fragment>
     );
 };
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
-    profile: state.profile,
+    projects: state.projects,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile })(ProfilePage);
+export default connect(mapStateToProps, { getAllProjects })(ProfilePage);

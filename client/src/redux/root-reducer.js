@@ -2,10 +2,10 @@ import { combineReducers } from 'redux';
 
 import alertReducer from './alert/alert.reducer';
 import authReducer from './auth/auth.reducer';
-import profileReducer from './profile/profile.reducer';
+import projectsReducer from './projects/projects.reducer';
 
 export default combineReducers({
     alert: alertReducer,
     auth: authReducer,
-    profile: profileReducer,
+    projects: projectsReducer,
 });

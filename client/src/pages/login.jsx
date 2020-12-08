@@ -40,6 +40,7 @@ const Login = ({ login, isAuthenticated }) => {
                             name="email"
                             value={email}
                             onChange={(e) => onChange(e)}
+                            required
                         />
                         <label for="email" className="form-label">
                             Email Address
@@ -54,6 +55,7 @@ const Login = ({ login, isAuthenticated }) => {
                             minlength="6"
                             value={password}
                             onChange={(e) => onChange(e)}
+                            required
                         />
                         <label for="password" className="form-label">
                             Password

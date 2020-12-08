@@ -1,29 +1,29 @@
-import { ProfileActionTypes } from './profile.types';
+import { ProjectsActionTypes } from './projects.types';
 
 const INITIAL_STATE = {
-    profile: null,
+    projects: [],
     loading: true,
     error: {},
 };
 
 const profileReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case ProfileActionTypes.GET_PROFILE:
+        case ProjectsActionTypes.GET_PROJECTS:
             return {
                 ...state,
-                profile: action.payload,
+                projects: action.payload,
                 loading: false,
             };
-        case ProfileActionTypes.PROFILE_ERROR:
+        case ProjectsActionTypes.PROJECT_ERROR:
             return {
                 ...state,
                 error: action.payload,
                 loading: false,
             };
-        case ProfileActionTypes.CLEAR_PROFILE:
+        case ProjectsActionTypes.CLEAR_PROJECTS:
             return {
                 ...state,
-                profile: null,
+                projects: [],
                 loading: false,
             };
         default:

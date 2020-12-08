@@ -141,11 +141,13 @@
     font-size: 8rem;
     line-height: 1.1;
     margin-bottom: 1.75rem;
+    text-transform: capitalize;
 }
 .lg {
     font-size: 5rem;
     line-height: 1.1;
     margin-bottom: 1.75rem;
+    text-transform: capitalize;
 }
 .md {
     font-size: 3rem;

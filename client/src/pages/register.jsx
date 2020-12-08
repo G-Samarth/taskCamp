@@ -62,6 +62,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                             name="email"
                             value={email}
                             onChange={(e) => onChange(e)}
+                            required
                         />
                         <label for="email" className="form-label">
                             Email Address
@@ -76,6 +77,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                             placeholder="Job Title"
                             value={userType}
                             onChange={(e) => onChange(e)}
+                            required
                         />
                         <datalist id="userTypes">
                             <option value="Manager">Manager</option>
@@ -95,6 +97,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                             value={password}
                             onChange={(e) => onChange(e)}
                             minlength="6"
+                            required
                         />
                         <label for="password" className="form-label">
                             Password
@@ -109,6 +112,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                             value={password2}
                             onChange={(e) => onChange(e)}
                             minlength="6"
+                            required
                         />
                         <label for="password2" className="form-label">
                             Confirm Password
@@ -117,7 +121,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                     <input
                         type="submit"
                         class="btn btn-primary blur-sm"
-                        value="Login"
+                        value="Register"
                     />
                 </form>
             </div>

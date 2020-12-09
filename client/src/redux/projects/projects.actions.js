@@ -23,6 +23,25 @@ export const getAllProjects = () => async (dispatch) => {
     }
 };
 
+export const getProjectById = (projectId) => async (dispatch) => {
+    try {
+        const res = await axios.get(`/manager/projects/${projectId}`);
+
+        dispatch({
+            type: ProjectsActionTypes.GET_PROJECT,
+            payload: res.data,
+        });
+    } catch (err) {
+        dispatch({
+            type: ProjectsActionTypes.PROJECT_ERROR,
+            payload: {
+                msg: err.response.statusText,
+                status: err.response.status,
+            },
+        });
+    }
+};
+
 export const createProject = (formData, history, edit = false) => async (
     dispatch
 ) => {
@@ -33,7 +52,9 @@ export const createProject = (formData, history, edit = false) => async (
             },
         };
 
-        const res = await axios.post('/manager/projects', formData, config);
+        await axios.post('/manager/projects', formData, config);
+
+        const res = await axios.get('/manager/projects');
 
         dispatch({
             type: ProjectsActionTypes.GET_PROJECTS,

@@ -1,5 +1,6 @@
 export const ProjectsActionTypes = {
     GET_PROJECTS: 'GET_PROJECTS',
+    GET_PROJECT: 'GET_PROJECT',
     PROJECT_ERROR: 'PROJECT_ERROR',
     CLEAR_PROJECTS: 'CLEAR_PROJECTS',
 };

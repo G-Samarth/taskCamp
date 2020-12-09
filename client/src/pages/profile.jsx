@@ -17,7 +17,7 @@ const ProfilePage = ({
         getAllProjects();
     }, [getAllProjects]);
 
-    return loading && projects === null ? (
+    return loading && projects.length === 0 ? (
         <Spinner />
     ) : (
         <Fragment>

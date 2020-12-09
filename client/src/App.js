@@ -12,6 +12,7 @@ import Alert from './components/alert';
 import ProfilePage from './pages/profile';
 import PrivateRoute from './components/routing/private-route';
 import ProjectForm from './components/project-form';
+import ProjectPage from './pages/project';
 
 import { Provider } from 'react-redux';
 import store from './redux/store';
@@ -42,6 +43,11 @@ const App = ({ location }) => {
                             exact
                             path="/dashboard"
                             component={ProfilePage}
+                        />
+                        <PrivateRoute
+                            exact
+                            path="/project/:projectId"
+                            component={ProjectPage}
                         />
                         <PrivateRoute
                             exact

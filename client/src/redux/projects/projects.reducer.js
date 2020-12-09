@@ -1,6 +1,7 @@
 import { ProjectsActionTypes } from './projects.types';
 
 const INITIAL_STATE = {
+    project: null,
     projects: [],
     loading: true,
     error: {},
@@ -12,6 +13,12 @@ const profileReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 projects: action.payload,
+                loading: false,
+            };
+        case ProjectsActionTypes.GET_PROJECT:
+            return {
+                ...state,
+                project: action.payload,
                 loading: false,
             };
         case ProjectsActionTypes.PROJECT_ERROR:

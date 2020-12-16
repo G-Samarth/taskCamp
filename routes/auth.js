@@ -8,6 +8,7 @@ const { check, validationResult } = require('express-validator');
 
 const User = require('../models/user');
 const auth = require('../middleware/auth');
+const checkObjectId = require('../middleware/checkObjectId');
 
 const router = express.Router();
 
@@ -154,5 +155,31 @@ router.get('/user', auth, async (req, res) => {
         res.status(500).json({ errors: [{ msg: 'Server Error' }] });
     }
 });
+
+// @route    GET /auth/user/:userId
+// @desc     get user by userId
+// @access   Public
+router.get(
+    '/user/:userId',
+    [auth, checkObjectId('userId')],
+    async (req, res) => {
+        const userId = req.params.userId;
+
+        const user = await User.findById(userId).select('-password');
+
+        try {
+            if (!user) {
+                return res
+                    .status(404)
+                    .json({ errors: [{ msg: 'User Not Found' }] });
+            }
+
+            res.json(user);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+        }
+    }
+);
 
 module.exports = router;

@@ -46,7 +46,7 @@ const App = ({ location }) => {
                         />
                         <PrivateRoute
                             exact
-                            path="/project/:projectId"
+                            path="/dashboard/:projectId"
                             component={ProjectPage}
                         />
                         <PrivateRoute

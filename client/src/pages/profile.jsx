@@ -21,15 +21,17 @@ const ProfilePage = ({
         <Spinner />
     ) : (
         <Fragment>
-            <ProfileComponent />
-            {projects.map((project) => (
-                <ProjectComponent key={project._id} project={project} />
-            ))}
-            <Link to="/add-project">
-                <div className="project-add border-5 blur-lg">
-                    <i className="fas fa-plus"></i>
-                </div>
-            </Link>
+            <div class="width-normal">
+                <ProfileComponent />
+                {projects.map((project) => (
+                    <ProjectComponent key={project._id} project={project} />
+                ))}
+                <Link to="/add-project">
+                    <div className="project-add border-5 blur-lg">
+                        <i className="fas fa-plus"></i>
+                    </div>
+                </Link>
+            </div>
         </Fragment>
     );
 };

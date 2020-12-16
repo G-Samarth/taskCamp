@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 
 const Project = ({ history, project }) => {
     const onClick = () => {
-        history.push(`/project/${project._id}`);
+        history.push(`/dashboard/${project._id}`);
     };
 
     return (

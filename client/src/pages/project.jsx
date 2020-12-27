@@ -7,11 +7,14 @@ import { getProjectById } from '../redux/projects/projects.actions';
 import Spinner from '../components/spinner';
 import ProjectInfo from '../components/project-info';
 import ProjectLead from '../components/project-lead';
+import ResourceAdd from '../components/resource-add';
+import PopupAdd from '../components/popup-add';
 
 const ProjectPage = ({
     match,
     getProjectById,
     projects: { project, loading },
+    showPopup,
 }) => {
     useEffect(() => {
         getProjectById(match.params.projectId);
@@ -52,91 +55,8 @@ const ProjectPage = ({
                         </div>
                     </div>
                 </a>
-                <div class="resource-section-card p-3 bg-white border-5 blur-md">
-                    <div class="resource-section-card-info">
-                        <img
-                            class="round-img"
-                            src="../dist/img/resource.png"
-                            alt="Profile Picture"
-                        />
-                        <p>Resource2</p>
-                        <p>res2@gmail.com</p>
-                    </div>
-                    <div class="resource-section-card-task">
-                        <p>
-                            <strong>Task Title:</strong> Frontend Team
-                        </p>
-                        <p>
-                            <strong>Task Description:</strong> Lorem ipsum dolor
-                            sit amet consectetur adipisicing elit. Dolor, est.
-                        </p>
-                    </div>
-                </div>
-                <div class="resource-section-card p-3 bg-white border-5 blur-md">
-                    <div class="resource-section-card-info">
-                        <img
-                            class="round-img"
-                            src="../dist/img/resource.png"
-                            alt="Profile Picture"
-                        />
-                        <p>Resource3</p>
-                        <p>res3@gmail.com</p>
-                    </div>
-                    <div class="resource-section-card-task">
-                        <p>
-                            <strong>Task Title:</strong> Backend Team
-                        </p>
-                        <p>
-                            <strong>Task Description:</strong> Lorem ipsum dolor
-                            sit amet consectetur adipisicing elit. Dolor, est.
-                        </p>
-                    </div>
-                </div>
-                <div class="resource-section-card p-3 bg-white border-5 blur-md">
-                    <div class="resource-section-card-info">
-                        <img
-                            class="round-img"
-                            src="../dist/img/resource.png"
-                            alt="Profile Picture"
-                        />
-                        <p>Resource4</p>
-                        <p>res4@gmail.com</p>
-                    </div>
-                    <div class="resource-section-card-task">
-                        <p>
-                            <strong>Task Title:</strong> Backend Team
-                        </p>
-                        <p>
-                            <strong>Task Description:</strong> Lorem ipsum dolor
-                            sit amet consectetur adipisicing elit. Dolor, est.
-                        </p>
-                    </div>
-                </div>
-                <div class="resource-section-card p-3 bg-white border-5 blur-md">
-                    <div class="resource-section-card-info">
-                        <img
-                            class="round-img"
-                            src="../dist/img/resource.png"
-                            alt="Profile Picture"
-                        />
-                        <p>Resource5</p>
-                        <p>res5@gmail.com</p>
-                    </div>
-                    <div class="resource-section-card-task">
-                        <p>
-                            <strong>Task Title:</strong> Backend Team
-                        </p>
-                        <p>
-                            <strong>Task Description:</strong> Lorem ipsum dolor
-                            sit amet consectetur adipisicing elit. Dolor, est.
-                        </p>
-                    </div>
-                </div>
-                <a href="#popup-add">
-                    <div class="resource-section-add p-3 bg-white border-5 blur-md">
-                        <i class="fas fa-plus"></i>
-                    </div>
-                </a>
+                <ResourceAdd />
+                {showPopup && <PopupAdd />}
             </section>
         </Fragment>
     );
@@ -144,6 +64,7 @@ const ProjectPage = ({
 
 const mapStateToProps = (state) => ({
     projects: state.projects,
+    showPopup: state.projectInfo.popupAdd,
 });
 
 export default connect(mapStateToProps, { getProjectById })(

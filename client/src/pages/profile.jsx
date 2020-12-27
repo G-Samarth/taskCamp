@@ -10,12 +10,12 @@ import ProjectComponent from '../components/project';
 
 const ProfilePage = ({
     getAllProjects,
-    auth,
+    auth: { currentUser, loading: authLoading },
     projects: { projects, loading },
 }) => {
     useEffect(() => {
-        getAllProjects();
-    }, [getAllProjects]);
+        !authLoading && getAllProjects(currentUser.userType);
+    }, [getAllProjects, authLoading]);
 
     return loading && projects.length === 0 ? (
         <Spinner />
@@ -26,11 +26,13 @@ const ProfilePage = ({
                 {projects.map((project) => (
                     <ProjectComponent key={project._id} project={project} />
                 ))}
-                <Link to="/add-project">
-                    <div className="project-add border-5 blur-lg">
-                        <i className="fas fa-plus"></i>
-                    </div>
-                </Link>
+                {currentUser.userType === 'Manager' ? (
+                    <Link to="/add-project">
+                        <div className="project-add border-5 blur-lg">
+                            <i className="fas fa-plus"></i>
+                        </div>
+                    </Link>
+                ) : null}
             </div>
         </Fragment>
     );

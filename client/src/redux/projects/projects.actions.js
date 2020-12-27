@@ -4,9 +4,9 @@ import { loadUser } from '../auth/auth.actions';
 
 import axios from 'axios';
 
-export const getAllProjects = () => async (dispatch) => {
+export const getAllProjects = (userType) => async (dispatch) => {
     try {
-        const res = await axios.get('/manager/projects');
+        const res = await axios.get(`/${userType}/projects`);
 
         dispatch({
             type: ProjectsActionTypes.GET_PROJECTS,

@@ -5,10 +5,22 @@ const INITIAL_STATE = {
     resources: [],
     error: {},
     loading: true,
+    popupAdd: false,
+    popupInfo: false,
 };
 
 const projectInfoReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
+        case ProjectInfoActionTypes.TOGGLE_RESOURCE_ADD:
+            return {
+                ...state,
+                popupAdd: !state.popupAdd,
+            };
+        case ProjectInfoActionTypes.TOGGLE_RESOURCE_INFO:
+            return {
+                ...state,
+                popupInfo: !state.popupInfo,
+            };
         case ProjectInfoActionTypes.LEAD_SUCCESS:
             return {
                 ...state,

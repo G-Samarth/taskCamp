@@ -19,3 +19,15 @@ export const getLead = (userId) => async (dispatch) => {
         });
     }
 };
+
+export const toggleResourceAdd = () => (dispatch) => {
+    dispatch({
+        type: ProjectInfoActionTypes.TOGGLE_RESOURCE_ADD,
+    });
+};
+
+export const toggleResourceInfo = () => (dispatch) => {
+    dispatch({
+        type: ProjectInfoActionTypes.TOGGLE_RESOURCE_INFO,
+    });
+};

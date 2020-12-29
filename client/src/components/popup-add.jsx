@@ -20,18 +20,21 @@ const PopupAdd = ({ toggleResourceAdd }) => {
         console.log(formData);
     };
     return (
-        <div class="popup" id="popup-add">
-            <div class="popup-card p-3 bg-white border-5">
-                <div class="popup-close" onClick={() => toggleResourceAdd()}>
+        <div className="popup" id="popup-add">
+            <div className="popup-card p-3 bg-white border-5">
+                <div
+                    className="popup-close"
+                    onClick={() => toggleResourceAdd()}
+                >
                     &times;
                 </div>
-                <h1 class="lead text-dark text-align">Add a Resource</h1>
-                <form class="form-add" onSubmit={(e) => onSubmit(e)}>
-                    <label for="email" class="form-add-label">
+                <h1 className="lead text-dark text-align">Add a Resource</h1>
+                <form className="form-add" onSubmit={(e) => onSubmit(e)}>
+                    <label for="email" className="form-add-label">
                         Email Address
                     </label>
                     <input
-                        class="form-add-input blur-sm"
+                        className="form-add-input blur-sm"
                         type="email"
                         placeholder="Email Address"
                         name="resEmail"
@@ -40,11 +43,11 @@ const PopupAdd = ({ toggleResourceAdd }) => {
                         required
                     />
 
-                    <label for="task-title" class="form-add-label">
+                    <label for="task-title" className="form-add-label">
                         Task Title
                     </label>
                     <input
-                        class="form-add-input blur-sm"
+                        className="form-add-input blur-sm"
                         type="text"
                         placeholder="Task Title"
                         name="title"
@@ -53,11 +56,11 @@ const PopupAdd = ({ toggleResourceAdd }) => {
                         required
                     />
 
-                    <label for="task-desc" class="form-add-label">
+                    <label for="task-desc" className="form-add-label">
                         Task Description
                     </label>
                     <textarea
-                        class="form-add-input blur-sm"
+                        className="form-add-input blur-sm"
                         placeholder="Task Description"
                         name="description"
                         rows="10"
@@ -68,7 +71,7 @@ const PopupAdd = ({ toggleResourceAdd }) => {
 
                     <input
                         type="submit"
-                        class="btn btn-primary blur-sm"
+                        className="btn btn-primary blur-sm"
                         value="Add"
                     />
                 </form>

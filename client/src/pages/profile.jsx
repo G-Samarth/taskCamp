@@ -21,7 +21,7 @@ const ProfilePage = ({
         <Spinner />
     ) : (
         <Fragment>
-            <div class="width-normal">
+            <div className="width-normal">
                 <ProfileComponent />
                 {projects.map((project) => (
                     <ProjectComponent key={project._id} project={project} />

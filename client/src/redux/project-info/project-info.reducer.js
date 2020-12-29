@@ -2,7 +2,6 @@ import { ProjectInfoActionTypes } from './project-info.types';
 
 const INITIAL_STATE = {
     lead: null,
-    resources: [],
     error: {},
     loading: true,
     popupAdd: false,
@@ -27,23 +26,10 @@ const projectInfoReducer = (state = INITIAL_STATE, action) => {
                 lead: action.payload,
                 loading: false,
             };
-        case ProjectInfoActionTypes.RESOURCE_SUCCESS:
-            return {
-                ...state,
-                resources: action.payload,
-                loading: false,
-            };
         case ProjectInfoActionTypes.LEAD_FAILURE:
             return {
                 ...state,
                 lead: null,
-                error: action.payload,
-                loading: false,
-            };
-        case ProjectInfoActionTypes.RESOURCE_FAILURE:
-            return {
-                ...state,
-                resources: [],
                 error: action.payload,
                 loading: false,
             };

@@ -9,12 +9,14 @@ import ProjectInfo from '../components/project-info';
 import ProjectLead from '../components/project-lead';
 import ResourceAdd from '../components/resource-add';
 import PopupAdd from '../components/popup-add';
+import Resource from '../components/resource';
 
 const ProjectPage = ({
     match,
     getProjectById,
     projects: { project, loading },
     showPopup,
+    auth: { currentUser },
 }) => {
     useEffect(() => {
         getProjectById(match.params.projectId);
@@ -24,45 +26,26 @@ const ProjectPage = ({
         <Spinner />
     ) : (
         <Fragment>
-            <section class="project-section my-3">
-                <div class="project-section-top">
+            <section className="project-section my-3">
+                <div className="project-section-top">
                     <ProjectInfo project={project} />
                     <ProjectLead project={project} />
                 </div>
             </section>
 
-            <section class="resource-section">
-                <a href="#popup">
-                    <div class="resource-section-card p-3 bg-white border-5 blur-md">
-                        <div class="resource-section-card-info">
-                            <img
-                                class="round-img"
-                                src="../dist/img/resource.png"
-                                alt="Profile Picture"
-                            />
-                            <p>Resource1</p>
-                            <p>res1@gmail.com</p>
-                        </div>
-                        <div class="resource-section-card-task">
-                            <p>
-                                <strong>Task Title:</strong> Frontend Team
-                            </p>
-                            <p>
-                                <strong>Task Description:</strong> Lorem ipsum
-                                dolor sit amet consectetur adipisicing elit.
-                                Dolor, est.
-                            </p>
-                        </div>
-                    </div>
-                </a>
-                <ResourceAdd />
-                {showPopup && <PopupAdd />}
+            <section className="resource-section">
+                {project.resources.map((resource) => (
+                    <Resource resource={resource} />
+                ))}
+                {currentUser === 'Lead' && <ResourceAdd />}
+                {showPopup && currentUser === 'Lead' && <PopupAdd />}
             </section>
         </Fragment>
     );
 };
 
 const mapStateToProps = (state) => ({
+    auth: state.auth,
     projects: state.projects,
     showPopup: state.projectInfo.popupAdd,
 });

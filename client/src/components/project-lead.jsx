@@ -14,16 +14,16 @@ const ProjectLead = ({
 
     return (
         !loading && (
-            <div class="project-section-top-lead bg-primary p-3 border-10 blur-md">
-                <h2 class="md">LEAD</h2>
+            <div className="project-section-top-lead bg-primary p-3 border-10 blur-md">
+                <h2 className="md">LEAD</h2>
                 <div>
                     <img
-                        class="round-img"
+                        className="round-img"
                         src={lead.avatar}
                         alt="Profile Picture"
                     />
-                    <p class="lead lead-name">{lead.name}</p>
-                    <p class="lead">{lead.email}</p>
+                    <p className="lead lead-name">{lead.name}</p>
+                    <p className="lead">{lead.email}</p>
                 </div>
             </div>
         )

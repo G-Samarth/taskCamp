@@ -34,7 +34,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
     return (
         <Fragment>
-            <div class="width-normal">
+            <div className="width-normal">
                 <div className="form-background p-4 border-3 my-1 blur-lg">
                     <h1 className="lg text-dark">Sign Up</h1>
                     <p className="lead">
@@ -69,7 +69,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                                 Email Address
                             </label>
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <input
                                 className="blur-sm"
                                 list="userTypes"
@@ -121,7 +121,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                         </div>
                         <input
                             type="submit"
-                            class="btn btn-primary blur-sm"
+                            className="btn btn-primary blur-sm"
                             value="Register"
                         />
                     </form>

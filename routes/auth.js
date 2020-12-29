@@ -158,7 +158,7 @@ router.get('/user', auth, async (req, res) => {
 
 // @route    GET /auth/user/:userId
 // @desc     get user by userId
-// @access   Public
+// @access   Private
 router.get(
     '/user/:userId',
     [auth, checkObjectId('userId')],

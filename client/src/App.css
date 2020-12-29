@@ -525,7 +525,8 @@ img {
 }
 .project .lead-img {
     margin-right: 4rem;
-    width: 25%;
+    min-width: 15%;
+    max-width: 15%;
 }
 .project-info {
     font-size: 1.5rem;

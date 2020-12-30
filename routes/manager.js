@@ -44,6 +44,11 @@ router.post(
         try {
             const assignedBy = req.user.id;
             const lead = await User.findOne({ email: leadEmail });
+            if (!lead) {
+                return res
+                    .status(400)
+                    .json({ errors: [{ msg: 'Invalid Email ID' }] });
+            }
             const assignedTo = lead.id;
 
             const project = new Project({

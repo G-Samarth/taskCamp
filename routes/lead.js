@@ -138,7 +138,11 @@ router.post(
                     const newResource = { user, taskTitle, taskDescription };
 
                     user = await User.findOne({ email: resourceEmail });
-
+                    if (!user) {
+                        return res
+                            .status(400)
+                            .json({ errors: [{ msg: 'Invalid Email ID' }] });
+                    }
                     const newProject = user.projects;
                     newProject.unshift({ project: project.id });
                     user.projects = newProject;

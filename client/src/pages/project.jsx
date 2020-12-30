@@ -9,13 +9,15 @@ import ProjectInfo from '../components/project-info';
 import ProjectLead from '../components/project-lead';
 import ResourceAdd from '../components/resource-add';
 import PopupAdd from '../components/popup-add';
+import PopupInfo from '../components/popup-info';
 import Resource from '../components/resource';
 
 const ProjectPage = ({
     match,
     getProjectById,
     projects: { project, loading },
-    showPopup,
+    showPopupAdd,
+    showPopupInfo,
     auth: { currentUser },
 }) => {
     useEffect(() => {
@@ -38,7 +40,8 @@ const ProjectPage = ({
                     <Resource resource={resource} />
                 ))}
                 {currentUser === 'Lead' && <ResourceAdd />}
-                {showPopup && currentUser === 'Lead' && <PopupAdd />}
+                {showPopupAdd && currentUser === 'Lead' && <PopupAdd />}
+                {showPopupInfo && <PopupInfo />}
             </section>
         </Fragment>
     );
@@ -47,7 +50,8 @@ const ProjectPage = ({
 const mapStateToProps = (state) => ({
     auth: state.auth,
     projects: state.projects,
-    showPopup: state.projectInfo.popupAdd,
+    showPopupAdd: state.projectInfo.popupAdd,
+    showPopupInfo: state.projectInfo.popupInfo,
 });
 
 export default connect(mapStateToProps, { getProjectById })(

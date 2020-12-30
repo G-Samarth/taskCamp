@@ -15,7 +15,7 @@ const ProfilePage = ({
 }) => {
     useEffect(() => {
         !authLoading && getAllProjects(currentUser.userType);
-    }, [getAllProjects, authLoading]);
+    }, [getAllProjects, authLoading, currentUser]);
 
     return loading && projects.length === 0 ? (
         <Spinner />

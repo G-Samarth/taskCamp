@@ -26,8 +26,9 @@ export const toggleResourceAdd = () => (dispatch) => {
     });
 };
 
-export const toggleResourceInfo = () => (dispatch) => {
+export const toggleResourceInfo = (props) => (dispatch) => {
     dispatch({
         type: ProjectInfoActionTypes.TOGGLE_RESOURCE_INFO,
+        payload: props,
     });
 };

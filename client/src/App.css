@@ -593,6 +593,7 @@ img {
     justify-content: space-between;
     align-items: center;
     min-height: 35rem;
+    cursor: pointer;
 }
 .resource-section-card-info {
     text-align: center;

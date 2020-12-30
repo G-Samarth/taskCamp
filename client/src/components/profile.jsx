@@ -9,7 +9,7 @@ const Profile = ({ auth: { loading, currentUser } }) => {
                     <img
                         className="round-img"
                         src={currentUser.avatar}
-                        alt="Profile Picture"
+                        alt="Profile"
                     />
                 </div>
                 <div className="profile-info">

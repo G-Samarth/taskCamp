@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
-const Resource = ({ resource }) => {
+import { toggleResourceInfo } from '../redux/project-info/project-info.actions';
+
+const Resource = ({ resource, toggleResourceInfo }) => {
     const [resourceInfo, setResourceInfo] = useState({
         name: '',
         email: '',
@@ -10,18 +13,22 @@ const Resource = ({ resource }) => {
 
     useEffect(() => {
         axios.get(`/auth/user/${resource.user}`).then((data) => {
-            console.log(data.data);
             setResourceInfo(data.data);
         });
     }, [resource.user]);
 
     return (
-        <div className="resource-section-card p-3 bg-white border-5 blur-md">
+        <div
+            className="resource-section-card p-3 bg-white border-5 blur-md"
+            onClick={() =>
+                toggleResourceInfo({ resourceInfo, taskInfo: resource })
+            }
+        >
             <div className="resource-section-card-info">
                 <img
                     className="round-img"
                     src={resourceInfo.avatar}
-                    alt="Profile Picture"
+                    alt="Profile"
                 />
                 <p>{resourceInfo.name}</p>
                 <p>{resourceInfo.email}</p>
@@ -41,4 +48,4 @@ const Resource = ({ resource }) => {
     );
 };
 
-export default Resource;
+export default connect(null, { toggleResourceInfo })(Resource);

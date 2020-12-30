@@ -26,7 +26,7 @@ const Project = ({ history, project }) => {
                     <img
                         className="round-img"
                         src={lead.avatar}
-                        alt="Profile Picture"
+                        alt="Profile"
                     />
                 </div>
 

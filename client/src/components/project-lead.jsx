@@ -20,7 +20,7 @@ const ProjectLead = ({
                     <img
                         className="round-img"
                         src={lead.avatar}
-                        alt="Profile Picture"
+                        alt="Profile"
                     />
                     <p className="lead lead-name">{lead.name}</p>
                     <p className="lead">{lead.email}</p>

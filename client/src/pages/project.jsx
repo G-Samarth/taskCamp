@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -18,11 +18,12 @@ const ProjectPage = ({
     projects: { project, loading },
     showPopupAdd,
     showPopupInfo,
-    auth: { currentUser },
+    auth: { currentUser, loading: authLoading },
 }) => {
     useEffect(() => {
-        getProjectById(match.params.projectId);
-    }, [getProjectById, match.params.projectId]);
+        !authLoading &&
+            getProjectById(match.params.projectId, currentUser.userType);
+    }, [getProjectById, match.params.projectId, currentUser, authLoading]);
 
     return project === null || loading ? (
         <Spinner />
@@ -39,8 +40,10 @@ const ProjectPage = ({
                 {project.resources.map((resource) => (
                     <Resource resource={resource} />
                 ))}
-                {currentUser === 'Lead' && <ResourceAdd />}
-                {showPopupAdd && currentUser === 'Lead' && <PopupAdd />}
+                {currentUser.userType === 'Lead' && <ResourceAdd />}
+                {showPopupAdd && currentUser.userType === 'Lead' && (
+                    <PopupAdd />
+                )}
                 {showPopupInfo && <PopupInfo />}
             </section>
         </Fragment>

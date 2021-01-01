@@ -24,7 +24,11 @@ const ProfilePage = ({
             <div className="width-normal">
                 <ProfileComponent />
                 {projects.map((project) => (
-                    <ProjectComponent key={project._id} project={project} />
+                    <ProjectComponent
+                        key={project._id}
+                        project={project}
+                        userType={currentUser.userType}
+                    />
                 ))}
                 {currentUser.userType === 'Manager' ? (
                     <Link to="/add-project">

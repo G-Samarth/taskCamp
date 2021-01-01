@@ -23,9 +23,9 @@ export const getAllProjects = (userType) => async (dispatch) => {
     }
 };
 
-export const getProjectById = (projectId) => async (dispatch) => {
+export const getProjectById = (projectId, userType) => async (dispatch) => {
     try {
-        const res = await axios.get(`/manager/projects/${projectId}`);
+        const res = await axios.get(`/${userType}/projects/${projectId}`);
 
         dispatch({
             type: ProjectsActionTypes.GET_PROJECT,

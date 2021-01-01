@@ -2,18 +2,26 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { withRouter } from 'react-router';
 import axios from 'axios';
 
-const Project = ({ history, project }) => {
-    const [lead, setLead] = useState({
+const Project = ({ history, project, userType }) => {
+    const [user, setUser] = useState({
         name: '',
         email: '',
         avatar: '',
     });
 
     useEffect(() => {
-        axios.get(`/auth/user/${project.assignedTo}`).then((data) => {
-            setLead(data.data);
-        });
-    }, [project.assignedTo]);
+        axios
+            .get(
+                `/auth/user/${
+                    userType === 'Manager'
+                        ? project.assignedTo
+                        : project.assignedBy
+                }`
+            )
+            .then((data) => {
+                setUser(data.data);
+            });
+    }, [project, userType]);
 
     const onClick = () => {
         history.push(`/dashboard/${project._id}`);
@@ -25,17 +33,22 @@ const Project = ({ history, project }) => {
                 <div className="lead-img">
                     <img
                         className="round-img"
-                        src={lead.avatar}
+                        src={user.avatar}
                         alt="Profile"
                     />
                 </div>
 
                 <div className="project-info">
                     <p className="md">
-                        <strong>Lead: </strong> {lead.name}
+                        <strong>
+                            {userType === 'Manager'
+                                ? 'Team Lead:'
+                                : 'Assigned By:'}
+                        </strong>{' '}
+                        {user.name}
                     </p>
                     <p className="email sm">
-                        <strong>Email: </strong> {lead.email}
+                        <strong>Email: </strong> {user.email}
                     </p>
                     <p>
                         <strong>Task Title: </strong> {project.title}

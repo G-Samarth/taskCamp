@@ -611,6 +611,7 @@ img {
     font-size: 7.5rem;
     color: #c2bfbf;
     height: 100%;
+    min-height: 35rem;
     transition: all 0.2s;
 }
 .resource-section-add:hover {

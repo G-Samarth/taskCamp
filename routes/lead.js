@@ -72,7 +72,7 @@ router.get(
 );
 
 // @route    POST /lead/projects/:projectId
-// @desc     Add resources
+// @desc     Add resource
 // @access   Private
 router.post(
     '/projects/:projectId',
@@ -81,18 +81,12 @@ router.post(
         checkLead,
         checkObjectId('projectId'),
         [
-            check(
-                'resources.*.resourceEmail',
-                'Please include a valid email'
-            ).isEmail(),
-            check(
-                'resources.*.taskTitle',
-                'Please enter at least 5 characters'
-            ).isLength({
+            check('resourceEmail', 'Please include a valid email').isEmail(),
+            check('taskTitle', 'Please enter at least 5 characters').isLength({
                 min: 5,
             }),
             check(
-                'resources.*.taskDescription',
+                'taskDescription',
                 'Please enter at least 10 characters'
             ).isLength({
                 min: 10,
@@ -107,9 +101,9 @@ router.post(
         }
 
         try {
-            const user = req.user.id;
+            let user = req.user.id;
             const projectId = req.params.projectId;
-            const { resources } = req.body;
+            const { resourceEmail, taskTitle, taskDescription } = req.body;
 
             const project = await Project.findById(projectId);
 
@@ -125,38 +119,25 @@ router.post(
                     .json({ errors: [{ msg: 'User Not Authorized' }] });
             }
 
-            let projectResources = project.resources;
-            await Promise.all(
-                resources.map(async (resource) => {
-                    const {
-                        resourceEmail,
-                        taskTitle,
-                        taskDescription,
-                    } = resource;
+            user = null;
+            const newResource = { user, taskTitle, taskDescription };
 
-                    let user = null;
-                    const newResource = { user, taskTitle, taskDescription };
+            user = await User.findOne({ email: resourceEmail });
+            if (!user) {
+                return res
+                    .status(400)
+                    .json({ errors: [{ msg: 'Invalid Email ID' }] });
+            }
+            const newProject = user.projects;
+            newProject.unshift({ project: project.id });
+            user.projects = newProject;
+            await user.save();
 
-                    user = await User.findOne({ email: resourceEmail });
-                    if (!user) {
-                        return res
-                            .status(400)
-                            .json({ errors: [{ msg: 'Invalid Email ID' }] });
-                    }
-                    const newProject = user.projects;
-                    newProject.unshift({ project: project.id });
-                    user.projects = newProject;
-                    await user.save();
-
-                    newResource.user = user.id;
-                    projectResources.push(newResource);
-                })
-            );
-
-            project.resources = projectResources;
+            newResource.user = user.id;
+            project.resources.push(newResource);
             await project.save();
 
-            res.json({ msg: 'Resources Added' });
+            res.json({ msg: 'New Resource Added' });
         } catch (error) {
             console.log(error);
             res.status(500).json({ errors: [{ msg: 'Server Error' }] });

@@ -18,7 +18,6 @@ const ProjectForm = ({ history, createProject }) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
         createProject(formData, history);
     };
 

@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { toggleResourceAdd } from '../redux/project-info/project-info.actions';
+import { addResource } from '../redux/projects/projects.actions';
 
-const PopupAdd = ({ toggleResourceAdd }) => {
-    const [formData, setFormData] = useState({
-        title: '',
-        description: '',
-        email: '',
-    });
+const PopupAdd = ({ match, toggleResourceAdd, addResource }) => {
+    const [formData, setFormData] = useState({});
 
-    const { title, description, resEmail } = formData;
+    const { taskTitle, taskDescription, resourceEmail } = formData;
 
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
+        addResource(formData, match.params.projectId);
     };
     return (
         <div className="popup" id="popup-add">
@@ -37,8 +35,8 @@ const PopupAdd = ({ toggleResourceAdd }) => {
                         className="form-add-input blur-sm"
                         type="email"
                         placeholder="Email Address"
-                        name="resEmail"
-                        value={resEmail}
+                        name="resourceEmail"
+                        value={resourceEmail}
                         onChange={(e) => onChange(e)}
                         required
                     />
@@ -50,8 +48,8 @@ const PopupAdd = ({ toggleResourceAdd }) => {
                         className="form-add-input blur-sm"
                         type="text"
                         placeholder="Task Title"
-                        name="title"
-                        value={title}
+                        name="taskTitle"
+                        value={taskTitle}
                         onChange={(e) => onChange(e)}
                         required
                     />
@@ -62,9 +60,9 @@ const PopupAdd = ({ toggleResourceAdd }) => {
                     <textarea
                         className="form-add-input blur-sm"
                         placeholder="Task Description"
-                        name="description"
+                        name="taskDescription"
                         rows="10"
-                        value={description}
+                        value={taskDescription}
                         onChange={(e) => onChange(e)}
                         required
                     ></textarea>
@@ -80,4 +78,6 @@ const PopupAdd = ({ toggleResourceAdd }) => {
     );
 };
 
-export default connect(null, { toggleResourceAdd })(PopupAdd);
+export default connect(null, { toggleResourceAdd, addResource })(
+    withRouter(PopupAdd)
+);

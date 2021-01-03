@@ -1,29 +1,37 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { getLead } from '../redux/project-info/project-info.actions';
+import { getLeadOrManager } from '../redux/project-info/project-info.actions';
 
 const ProjectLead = ({
-    project: { assignedTo },
-    getLead,
-    lead: { lead, loading },
+    project: { assignedTo, assignedBy },
+    getLeadOrManager,
+    leadOrManager: { leadOrManager, loading },
+    auth: { currentUser, loading: authLoading },
 }) => {
     useEffect(() => {
-        getLead(assignedTo);
-    }, [getLead, assignedTo]);
+        !authLoading &&
+            getLeadOrManager(
+                currentUser.userType === 'Manager' ? assignedTo : assignedBy
+            );
+    }, [getLeadOrManager, assignedTo, assignedBy, currentUser, authLoading]);
 
     return (
         !loading && (
             <div className="project-section-top-lead bg-primary p-3 border-10 blur-md">
-                <h2 className="md">LEAD</h2>
+                <h2 className="md">
+                    {currentUser.userType === 'Manager'
+                        ? 'TEAM LEAD'
+                        : 'ASSIGNED BY'}
+                </h2>
                 <div>
                     <img
                         className="round-img"
-                        src={lead.avatar}
+                        src={leadOrManager.avatar}
                         alt="Profile"
                     />
-                    <p className="lead lead-name">{lead.name}</p>
-                    <p className="lead">{lead.email}</p>
+                    <p className="lead lead-name">{leadOrManager.name}</p>
+                    <p className="lead">{leadOrManager.email}</p>
                 </div>
             </div>
         )
@@ -31,7 +39,8 @@ const ProjectLead = ({
 };
 
 const mapStateToProps = (state) => ({
-    lead: state.projectInfo,
+    leadOrManager: state.projectInfo,
+    auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getLead })(ProjectLead);
+export default connect(mapStateToProps, { getLeadOrManager })(ProjectLead);

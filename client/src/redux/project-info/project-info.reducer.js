@@ -1,7 +1,7 @@
 import { ProjectInfoActionTypes } from './project-info.types';
 
 const INITIAL_STATE = {
-    lead: null,
+    leadOrManager: null,
     resource: null,
     error: {},
     loading: true,
@@ -22,16 +22,16 @@ const projectInfoReducer = (state = INITIAL_STATE, action) => {
                 popupInfo: !state.popupInfo,
                 resource: action.payload,
             };
-        case ProjectInfoActionTypes.LEAD_SUCCESS:
+        case ProjectInfoActionTypes.LEAD_OR_MANAGER_SUCCESS:
             return {
                 ...state,
-                lead: action.payload,
+                leadOrManager: action.payload,
                 loading: false,
             };
-        case ProjectInfoActionTypes.LEAD_FAILURE:
+        case ProjectInfoActionTypes.LEAD_OR_MANAGER_FAILURE:
             return {
                 ...state,
-                lead: null,
+                leadOrManager: null,
                 error: action.payload,
                 loading: false,
             };

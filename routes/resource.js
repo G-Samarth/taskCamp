@@ -29,7 +29,12 @@ router.get('/projects', [auth], async (req, res) => {
                     }
                 });
 
-                return foundProject;
+                return {
+                    _id: project._id,
+                    assignedBy: project.assignedTo,
+                    title: foundProject.taskTitle,
+                    description: foundProject.taskDescription,
+                };
             })
         );
 
@@ -43,5 +48,43 @@ router.get('/projects', [auth], async (req, res) => {
         res.status(500).json({ errors: [{ msg: 'Server Error' }] });
     }
 });
+
+// @route    GET /resource/projects/:projectId
+// @desc     Get project by ID
+// @access   Private
+router.get(
+    '/projects/:projectId',
+    [auth, checkObjectId('projectId')],
+    async (req, res) => {
+        const user = req.user.id;
+        const projectId = req.params.projectId;
+
+        const project = await Project.findById(projectId);
+
+        if (!project) {
+            return res
+                .status(404)
+                .json({ errors: [{ msg: 'Project Not Found' }] });
+        }
+
+        try {
+            let resProject = {};
+            project.resources.map((resource) => {
+                if (resource.user.toString() === user) {
+                    resProject = resource;
+                }
+            });
+
+            res.json({
+                assignedBy: project.assignedTo,
+                title: resProject.taskTitle,
+                description: resProject.taskDescription,
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+        }
+    }
+);
 
 module.exports = router;

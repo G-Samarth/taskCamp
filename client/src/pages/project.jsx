@@ -36,16 +36,18 @@ const ProjectPage = ({
                 </div>
             </section>
 
-            <section className="resource-section">
-                {project.resources.map((resource) => (
-                    <Resource resource={resource} />
-                ))}
-                {currentUser.userType === 'Lead' && <ResourceAdd />}
-                {showPopupAdd && currentUser.userType === 'Lead' && (
-                    <PopupAdd />
-                )}
-                {showPopupInfo && <PopupInfo />}
-            </section>
+            {currentUser.userType !== 'Resource' && (
+                <section className="resource-section">
+                    {project.resources.map((resource) => (
+                        <Resource resource={resource} />
+                    ))}
+                    {currentUser.userType === 'Lead' && <ResourceAdd />}
+                    {showPopupAdd && currentUser.userType === 'Lead' && (
+                        <PopupAdd />
+                    )}
+                    {showPopupInfo && <PopupInfo />}
+                </section>
+            )}
         </Fragment>
     );
 };

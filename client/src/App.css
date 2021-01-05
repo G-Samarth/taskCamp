@@ -125,18 +125,11 @@
     padding: 3rem;
     margin-top: 10rem;
     margin-bottom: 5rem;
+    min-height: 58.1vh;
 }
 .width-normal {
     max-width: 1100px;
     margin: auto;
-}
-.container2 {
-    max-width: 1500px;
-    margin: auto;
-    overflow: hidden;
-    padding: 3rem;
-    margin-top: 10rem;
-    margin-bottom: 5rem;
 }
 .text-align {
     text-align: center;
@@ -660,7 +653,13 @@ img {
     justify-content: space-between;
     width: 20%;
 }
-
+.spinner-div {
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .spinner {
     width: 7rem;
     display: block;

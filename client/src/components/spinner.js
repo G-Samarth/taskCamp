@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import spinner from '../assets/loading.gif';
 
 const Spinner = () => (
-    <Fragment>
+    <div className="spinner-div">
         <img src={spinner} className="spinner" alt="Loading..." />
-    </Fragment>
+    </div>
 );
 
 export default Spinner;

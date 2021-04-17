@@ -17,7 +17,8 @@ router.get('/projects', [auth, checkLead], async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
 
-        const allProjects = await Promise.all(
+        let allProjects = [];
+        allProjects = await Promise.all(
             user.projects.map(async (proj) => {
                 const projectId = proj.project;
 
@@ -26,10 +27,6 @@ router.get('/projects', [auth, checkLead], async (req, res) => {
                 return project;
             })
         );
-
-        if (!allProjects.length) {
-            return res.json({ msg: 'No Projects' });
-        }
 
         res.json(allProjects);
     } catch (error) {
@@ -128,6 +125,18 @@ router.post(
                     .status(400)
                     .json({ errors: [{ msg: 'Invalid Email ID' }] });
             }
+
+            let flag = false;
+            project.resources.forEach((project) => {
+                if (project.user.toString() === user.id) {
+                    flag = true;
+                    return res
+                        .status(409)
+                        .json({ errors: [{ msg: 'Resource Already Added' }] });
+                }
+            });
+            if (flag) return;
+
             const newProject = user.projects;
             newProject.unshift({ project: project.id });
             user.projects = newProject;

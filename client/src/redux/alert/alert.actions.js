@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import { AlertActionTypes } from './alert.types';
 
-export const setAlert = (msg, alertType) => (dispatch) => {
+export const setAlert = (msg, alertType, wide = true) => (dispatch) => {
     const id = uuidv4();
 
     dispatch({
         type: AlertActionTypes.SET_ALERT,
-        payload: { msg, alertType, id },
+        payload: { msg, alertType, id, wide },
     });
 
     setTimeout(

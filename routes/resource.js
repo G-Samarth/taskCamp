@@ -15,7 +15,8 @@ router.get('/projects', [auth], async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
 
-        const allProjects = await Promise.all(
+        let allProjects = [];
+        allProjects = await Promise.all(
             user.projects.map(async (proj) => {
                 const projectId = proj.project;
 
@@ -37,10 +38,6 @@ router.get('/projects', [auth], async (req, res) => {
                 };
             })
         );
-
-        if (!allProjects.length) {
-            return res.json({ msg: 'No Projects' });
-        }
 
         res.json(allProjects);
     } catch (error) {

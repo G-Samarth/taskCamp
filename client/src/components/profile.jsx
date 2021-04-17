@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
 const Profile = ({ auth: { loading, currentUser } }) => {
@@ -20,8 +20,14 @@ const Profile = ({ auth: { loading, currentUser } }) => {
                         {currentUser.email}
                     </p>
                     <p>
-                        <strong>No. of active projects: </strong>
-                        {currentUser.projects.length}
+                        {currentUser.projects.length ? (
+                            <Fragment>
+                                <strong>No. of active projects: </strong>
+                                <span>{currentUser.projects.length}</span>
+                            </Fragment>
+                        ) : (
+                            <strong>No active projects </strong>
+                        )}
                     </p>
                 </div>
             </div>

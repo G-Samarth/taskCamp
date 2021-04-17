@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { getProjectById } from '../redux/projects/projects.actions';
+import { deleteProject } from '../redux/projects/projects.actions';
 
 import Spinner from '../components/spinner';
 import ProjectInfo from '../components/project-info';
@@ -11,10 +12,13 @@ import ResourceAdd from '../components/resource-add';
 import PopupAdd from '../components/popup-add';
 import PopupInfo from '../components/popup-info';
 import Resource from '../components/resource';
+import Button from '../components/button';
 
 const ProjectPage = ({
     match,
+    history,
     getProjectById,
+    deleteProject,
     projects: { project, loading },
     showPopupAdd,
     showPopupInfo,
@@ -24,6 +28,10 @@ const ProjectPage = ({
         !authLoading &&
             getProjectById(match.params.projectId, currentUser.userType);
     }, [getProjectById, match.params.projectId, currentUser, authLoading]);
+
+    const handleClick = () => {
+        deleteProject(match.params.projectId, currentUser.userType, history);
+    };
 
     return project === null || loading ? (
         <Spinner />
@@ -48,6 +56,14 @@ const ProjectPage = ({
                     {showPopupInfo && <PopupInfo />}
                 </section>
             )}
+            {currentUser.userType === 'Manager' && (
+                <Button
+                    className="btn btn-danger blur-sm my-3"
+                    onClick={() => handleClick()}
+                >
+                    Delete
+                </Button>
+            )}
         </Fragment>
     );
 };
@@ -59,6 +75,6 @@ const mapStateToProps = (state) => ({
     showPopupInfo: state.projectInfo.popupInfo,
 });
 
-export default connect(mapStateToProps, { getProjectById })(
+export default connect(mapStateToProps, { getProjectById, deleteProject })(
     withRouter(ProjectPage)
 );

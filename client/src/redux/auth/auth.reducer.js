@@ -23,7 +23,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 ...action.payload,
                 isAuthenticated: true,
-                loading: false,
+                loading: true, //check
             };
         case AuthActionTypes.REGISTER_FAILURE:
         case AuthActionTypes.LOGIN_FAILURE:
@@ -33,6 +33,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 token: null,
+                currentUser: null,
                 isAuthenticated: false,
                 loading: false,
             };

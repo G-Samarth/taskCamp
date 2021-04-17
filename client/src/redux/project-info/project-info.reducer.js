@@ -35,6 +35,15 @@ const projectInfoReducer = (state = INITIAL_STATE, action) => {
                 error: action.payload,
                 loading: false,
             };
+        case ProjectInfoActionTypes.CLEAR_INFO: //back to initial state
+            return {
+                ...state,
+                leadOrManager: null,
+                resource: null,
+                loading: true,
+                popupAdd: false,
+                popupInfo: false,
+            };
         default:
             return state;
     }

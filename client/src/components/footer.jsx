@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
         <footer className="footer bg-dark">
             <div className="footer-1 my-1">
                 <h1 className="logo">
-                    <a href="landing.html">TaskCamp</a>
+                    <Link to="/">TaskCamp</Link>
                 </h1>
                 <p>
                     <i className="fas fa-map-marker-alt p-1"></i>Mayur Vihar

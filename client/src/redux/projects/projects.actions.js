@@ -1,11 +1,14 @@
 import { ProjectsActionTypes } from './projects.types';
+import { ProjectInfoActionTypes } from '../project-info/project-info.types';
 import { setAlert } from '../alert/alert.actions';
-import { loadUser } from '../auth/auth.actions';
 
 import axios from 'axios';
 import { toggleResourceAdd } from '../project-info/project-info.actions';
 
 export const getAllProjects = (userType) => async (dispatch) => {
+    dispatch({
+        type: ProjectInfoActionTypes.CLEAR_INFO,
+    });
     try {
         const res = await axios.get(`/${userType}/projects`);
 
@@ -43,6 +46,29 @@ export const getProjectById = (projectId, userType) => async (dispatch) => {
     }
 };
 
+export const deleteProject = (projectId, userType, history) => async (
+    dispatch
+) => {
+    try {
+        await axios.delete(`/${userType}/projects/${projectId}`);
+
+        dispatch({
+            type: ProjectsActionTypes.DELETE_PROJECT,
+            payload: projectId,
+        });
+        dispatch(setAlert('Project Deleted', 'success'));
+        history.push('/dashboard');
+    } catch (err) {
+        dispatch({
+            type: ProjectsActionTypes.PROJECT_ERROR,
+            payload: {
+                msg: err.response.statusText,
+                status: err.response.status,
+            },
+        });
+    }
+};
+
 export const createProject = (formData, history, edit = false) => async (
     dispatch
 ) => {
@@ -68,7 +94,6 @@ export const createProject = (formData, history, edit = false) => async (
 
         if (!edit) {
             history.push('/dashboard');
-            dispatch(loadUser());
         }
     } catch (err) {
         const errors = err.response.data.errors;
@@ -106,13 +131,17 @@ export const addResource = (formData, projectId) => async (dispatch) => {
             payload: res.data,
         });
 
-        dispatch(setAlert('New Resource Added', 'success'));
+        dispatch(setAlert('New Resource Added', 'success', false));
     } catch (err) {
         const errors = err.response.data.errors;
 
         if (errors) {
-            errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+            errors.forEach((error) =>
+                dispatch(setAlert(error.msg, 'danger', false))
+            );
         }
+
+        dispatch(toggleResourceAdd());
 
         dispatch({
             type: ProjectsActionTypes.PROJECT_ERROR,

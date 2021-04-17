@@ -30,7 +30,7 @@ const ProfilePage = ({
                         userType={currentUser.userType}
                     />
                 ))}
-                {currentUser.userType === 'Manager' ? (
+                {currentUser?.userType === 'Manager' ? (
                     <Link to="/add-project">
                         <div className="project-add border-5 blur-lg">
                             <i className="fas fa-plus"></i>

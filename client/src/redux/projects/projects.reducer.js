@@ -21,6 +21,14 @@ const profileReducer = (state = INITIAL_STATE, action) => {
                 project: action.payload,
                 loading: false,
             };
+        case ProjectsActionTypes.DELETE_PROJECT:
+            return {
+                ...state,
+                project: null,
+                projects: state.projects.filter(
+                    (project) => project._id !== action.payload
+                ),
+            };
         case ProjectsActionTypes.PROJECT_ERROR:
             return {
                 ...state,
@@ -30,6 +38,7 @@ const profileReducer = (state = INITIAL_STATE, action) => {
         case ProjectsActionTypes.CLEAR_PROJECTS:
             return {
                 ...state,
+                project: null,
                 projects: [],
                 loading: false,
             };

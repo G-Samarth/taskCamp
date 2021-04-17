@@ -10,6 +10,9 @@ const alertReducer = (state = INITIAL_STATE, action) => {
         case AlertActionTypes.REMOVE_ALERT:
             return state.filter((alert) => alert.id !== action.payload);
 
+        case AlertActionTypes.CLEAR_ALERTS:
+            return [];
+
         default:
             return state;
     }

@@ -28,6 +28,7 @@ const profileReducer = (state = INITIAL_STATE, action) => {
                 projects: state.projects.filter(
                     (project) => project._id !== action.payload
                 ),
+                loading: false,
             };
         case ProjectsActionTypes.PROJECT_ERROR:
             return {

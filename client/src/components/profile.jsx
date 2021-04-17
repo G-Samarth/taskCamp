@@ -1,7 +1,10 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
-const Profile = ({ auth: { loading, currentUser } }) => {
+const Profile = ({
+    auth: { loading, currentUser },
+    projects: { projects },
+}) => {
     return (
         !loading && (
             <div className="profile border-5 bg-light blur-lg">
@@ -23,7 +26,7 @@ const Profile = ({ auth: { loading, currentUser } }) => {
                         {currentUser.projects.length ? (
                             <Fragment>
                                 <strong>No. of active projects: </strong>
-                                <span>{currentUser.projects.length}</span>
+                                <span>{projects.length}</span>
                             </Fragment>
                         ) : (
                             <strong>No active projects </strong>
@@ -37,6 +40,7 @@ const Profile = ({ auth: { loading, currentUser } }) => {
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
+    projects: state.projects,
 });
 
 export default connect(mapStateToProps)(Profile);

@@ -179,6 +179,17 @@ router.delete(
             lead.projects = updatedProjects;
             await lead.save();
 
+            await Promise.all(
+                project.resources.map(async (resource) => {
+                    const projectResource = await User.findById(resource.user);
+                    updatedProjects = projectResource.projects.filter(
+                        (project) => project.project.toString() !== projectId
+                    );
+                    projectResource.projects = updatedProjects;
+                    await projectResource.save();
+                })
+            );
+
             await project.remove();
 
             res.json({ msg: 'Project Deleted' });

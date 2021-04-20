@@ -3,9 +3,18 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 import { toggleResourceInfo } from '../redux/project-info/project-info.actions';
+import { deleteResource } from '../redux/projects/projects.actions';
 
-const Resource = ({ resource, toggleResourceInfo }) => {
+const Resource = ({
+    userType,
+    resource,
+    toggleResourceInfo,
+    editMode,
+    deleteResource,
+    project,
+}) => {
     const [resourceInfo, setResourceInfo] = useState({
+        _id: '',
         name: '',
         email: '',
         avatar: '',
@@ -17,6 +26,11 @@ const Resource = ({ resource, toggleResourceInfo }) => {
         });
     }, [resource.user]);
 
+    const handleClick = (e) => {
+        e.stopPropagation();
+        deleteResource(project._id, resourceInfo._id, userType);
+    };
+
     return (
         <div
             className="resource-section-card p-3 bg-white border-5 blur-md"
@@ -24,6 +38,11 @@ const Resource = ({ resource, toggleResourceInfo }) => {
                 toggleResourceInfo({ resourceInfo, taskInfo: resource })
             }
         >
+            {editMode && (
+                <div className="resource-del" onClick={(e) => handleClick(e)}>
+                    &times;
+                </div>
+            )}
             <div className="resource-section-card-info">
                 <img
                     className="round-img"
@@ -48,4 +67,12 @@ const Resource = ({ resource, toggleResourceInfo }) => {
     );
 };
 
-export default connect(null, { toggleResourceInfo })(Resource);
+const mapStateToProps = (state) => ({
+    userType: state.auth.currentUser.userType,
+    editMode: state.projectInfo.editMode,
+    project: state.projects.project,
+});
+
+export default connect(mapStateToProps, { toggleResourceInfo, deleteResource })(
+    Resource
+);

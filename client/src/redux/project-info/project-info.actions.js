@@ -32,3 +32,9 @@ export const toggleResourceInfo = (props) => (dispatch) => {
         payload: props,
     });
 };
+
+export const toggleEditMode = () => (dispatch) => {
+    dispatch({
+        type: ProjectInfoActionTypes.TOGGLE_EDIT_MODE,
+    });
+};

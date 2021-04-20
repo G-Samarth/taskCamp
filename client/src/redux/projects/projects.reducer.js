@@ -1,5 +1,7 @@
 import { ProjectsActionTypes } from './projects.types';
 
+import { filterResource } from './projects.utils';
+
 const INITIAL_STATE = {
     project: null,
     projects: [],
@@ -7,7 +9,7 @@ const INITIAL_STATE = {
     error: {},
 };
 
-const profileReducer = (state = INITIAL_STATE, action) => {
+const projectsReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case ProjectsActionTypes.GET_PROJECTS:
             return {
@@ -30,6 +32,12 @@ const profileReducer = (state = INITIAL_STATE, action) => {
                 ),
                 loading: false,
             };
+        case ProjectsActionTypes.DELETE_RESOURCE:
+            return {
+                ...state,
+                project: filterResource(state.project, action.payload),
+                loading: false,
+            };
         case ProjectsActionTypes.PROJECT_ERROR:
             return {
                 ...state,
@@ -48,4 +56,4 @@ const profileReducer = (state = INITIAL_STATE, action) => {
     }
 };
 
-export default profileReducer;
+export default projectsReducer;

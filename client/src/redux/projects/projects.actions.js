@@ -152,3 +152,24 @@ export const addResource = (formData, projectId) => async (dispatch) => {
         });
     }
 };
+
+export const deleteResource = (projectId, resId, userType) => async (
+    dispatch
+) => {
+    try {
+        await axios.delete(`/${userType}/projects/${projectId}/${resId}`);
+        dispatch({
+            type: ProjectsActionTypes.DELETE_RESOURCE,
+            payload: resId,
+        });
+        //toggle editMode if only 1 resource
+    } catch (err) {
+        dispatch({
+            type: ProjectsActionTypes.PROJECT_ERROR,
+            payload: {
+                msg: err.response.statusText,
+                status: err.response.status,
+            },
+        });
+    }
+};

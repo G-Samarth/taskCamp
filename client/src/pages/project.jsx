@@ -2,8 +2,11 @@ import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { getProjectById } from '../redux/projects/projects.actions';
-import { deleteProject } from '../redux/projects/projects.actions';
+import {
+    getProjectById,
+    deleteProject,
+} from '../redux/projects/projects.actions';
+import { toggleEditMode } from '../redux/project-info/project-info.actions';
 
 import Spinner from '../components/spinner';
 import ProjectInfo from '../components/project-info';
@@ -19,9 +22,11 @@ const ProjectPage = ({
     history,
     getProjectById,
     deleteProject,
+    toggleEditMode,
     projects: { project, loading },
     showPopupAdd,
     showPopupInfo,
+    editMode,
     auth: { currentUser, loading: authLoading },
 }) => {
     useEffect(() => {
@@ -49,7 +54,9 @@ const ProjectPage = ({
                     {project.resources.map((resource) => (
                         <Resource resource={resource} />
                     ))}
-                    {currentUser.userType === 'Lead' && <ResourceAdd />}
+                    {!editMode && currentUser.userType === 'Lead' && (
+                        <ResourceAdd />
+                    )}
                     {showPopupAdd && currentUser.userType === 'Lead' && (
                         <PopupAdd />
                     )}
@@ -64,6 +71,14 @@ const ProjectPage = ({
                     Delete
                 </Button>
             )}
+            {currentUser.userType === 'Lead' && (
+                <Button
+                    className="btn btn-warning blur-sm my-3"
+                    onClick={() => toggleEditMode()}
+                >
+                    Edit
+                </Button>
+            )}
         </Fragment>
     );
 };
@@ -73,8 +88,11 @@ const mapStateToProps = (state) => ({
     projects: state.projects,
     showPopupAdd: state.projectInfo.popupAdd,
     showPopupInfo: state.projectInfo.popupInfo,
+    editMode: state.projectInfo.editMode,
 });
 
-export default connect(mapStateToProps, { getProjectById, deleteProject })(
-    withRouter(ProjectPage)
-);
+export default connect(mapStateToProps, {
+    getProjectById,
+    deleteProject,
+    toggleEditMode,
+})(withRouter(ProjectPage));

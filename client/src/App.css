@@ -233,6 +233,13 @@
 .btn.btn-danger:hover {
     background: #e4606d;
 }
+.btn.btn-warning {
+    background-color: #f3c334;
+    color: #fff;
+}
+.btn.btn-warning:hover {
+    background: #eecf5f;
+}
 .btn:hover {
     background: #353232;
     color: #fff;
@@ -586,6 +593,17 @@ img {
     justify-content: space-between;
     align-items: center;
     min-height: 35rem;
+    cursor: pointer;
+    position: relative;
+}
+.resource-del {
+    padding: 0 1.5rem;
+    font-size: 4rem;
+    font-weight: 400;
+    position: absolute;
+    top: -1.2rem;
+    right: 0.25rem;
+    color: grey;
     cursor: pointer;
 }
 .resource-section-card-info {

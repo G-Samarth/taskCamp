@@ -7,6 +7,7 @@ const INITIAL_STATE = {
     loading: true,
     popupAdd: false,
     popupInfo: false,
+    editMode: false,
 };
 
 const projectInfoReducer = (state = INITIAL_STATE, action) => {
@@ -21,6 +22,11 @@ const projectInfoReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 popupInfo: !state.popupInfo,
                 resource: action.payload,
+            };
+        case ProjectInfoActionTypes.TOGGLE_EDIT_MODE:
+            return {
+                ...state,
+                editMode: !state.editMode,
             };
         case ProjectInfoActionTypes.LEAD_OR_MANAGER_SUCCESS:
             return {
@@ -43,6 +49,7 @@ const projectInfoReducer = (state = INITIAL_STATE, action) => {
                 loading: true,
                 popupAdd: false,
                 popupInfo: false,
+                editMode: false,
             };
         default:
             return state;

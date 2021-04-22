@@ -12,6 +12,7 @@ import Alert from './components/alert';
 import ProfilePage from './pages/profile';
 import PrivateRoute from './components/routing/private-route';
 import ProjectForm from './components/project-form';
+import EditProjectForm from './components/edit-project-form';
 import ProjectPage from './pages/project';
 
 import { Provider } from 'react-redux';
@@ -53,6 +54,11 @@ const App = ({ location }) => {
                             exact
                             path="/add-project"
                             component={ProjectForm}
+                        />
+                        <PrivateRoute
+                            exact
+                            path="/edit-project/:projectId"
+                            component={EditProjectForm}
                         />
                     </section>
                 </Switch>

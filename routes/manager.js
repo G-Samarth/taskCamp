@@ -81,6 +81,84 @@ router.post(
     }
 );
 
+// @route    PATCH /manager/projects/:projectId
+// @desc     Update project
+// @access   Private
+router.patch(
+    '/projects/:projectId',
+    [
+        auth,
+        checkManager,
+        [
+            check('leadEmail', 'Please include a valid email').isEmail(),
+            check('title', 'Please enter at least 10 characters').isLength({
+                min: 10,
+            }),
+            check(
+                'description',
+                'Please enter at least 50 characters'
+            ).isLength({
+                min: 50,
+            }),
+        ],
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { title, description, leadEmail } = req.body;
+        const projectId = req.params.projectId;
+
+        try {
+            const newLead = await User.findOne({ email: leadEmail });
+            if (!newLead) {
+                return res
+                    .status(400)
+                    .json({ errors: [{ msg: 'Invalid Email ID' }] });
+            }
+            const newLeadId = newLead.id;
+            let prevLeadId;
+
+            await Project.findById(projectId, function (err, data) {
+                if (err) console.log(err);
+                else prevLeadId = data.assignedTo;
+            });
+
+            await Project.findByIdAndUpdate(
+                projectId,
+                {
+                    $set: { title, description, assignedTo: newLeadId },
+                },
+                function (err) {
+                    console.log(err);
+                }
+            );
+
+            if (newLeadId != prevLeadId) {
+                const prevLead = await User.findById(prevLeadId);
+                const updatedProjects = prevLead.projects.filter(
+                    (project) => project.project.toString() !== projectId
+                );
+                prevLead.projects = updatedProjects;
+                await prevLead.save();
+
+                const newProject = newLead.projects;
+                newProject.unshift({ project: projectId });
+                newLead.projects = newProject;
+                await newLead.save();
+            }
+
+            res.json({ msg: 'Project Updated' });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+        }
+    }
+);
+
 // @route    GET /manager/projects
 // @desc     Get all projects
 // @access   Private

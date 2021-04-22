@@ -51,9 +51,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                                 onChange={(e) => onChange(e)}
                                 required
                             />
-                            <label for="name" className="form-label">
-                                Name
-                            </label>
+                            <label className="form-label">Name</label>
                         </div>
                         <div className="form-group">
                             <input
@@ -65,9 +63,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                                 onChange={(e) => onChange(e)}
                                 required
                             />
-                            <label for="email" className="form-label">
-                                Email Address
-                            </label>
+                            <label className="form-label">Email Address</label>
                         </div>
                         <div className="form-group">
                             <input
@@ -85,9 +81,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                                 <option value="Lead">Lead</option>
                                 <option value="Resource">Resource</option>
                             </datalist>
-                            <label for="userType" class="form-label">
-                                Job Title
-                            </label>
+                            <label className="form-label">Job Title</label>
                         </div>
                         <div className="form-group">
                             <input
@@ -97,12 +91,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                                 name="password"
                                 value={password}
                                 onChange={(e) => onChange(e)}
-                                minlength="6"
+                                minLength="6"
                                 required
                             />
-                            <label for="password" className="form-label">
-                                Password
-                            </label>
+                            <label className="form-label">Password</label>
                         </div>
                         <div className="form-group">
                             <input
@@ -112,10 +104,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                                 name="password2"
                                 value={password2}
                                 onChange={(e) => onChange(e)}
-                                minlength="6"
+                                minLength="6"
                                 required
                             />
-                            <label for="password2" className="form-label">
+                            <label className="form-label">
                                 Confirm Password
                             </label>
                         </div>

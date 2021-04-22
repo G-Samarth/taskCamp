@@ -69,7 +69,7 @@ export const deleteProject = (projectId, userType, history) => async (
     }
 };
 
-export const createProject = (formData, history, edit = false) => async (
+export const createProject = (formData, history, id, edit = false) => async (
     dispatch
 ) => {
     try {
@@ -79,7 +79,9 @@ export const createProject = (formData, history, edit = false) => async (
             },
         };
 
-        await axios.post('/manager/projects', formData, config);
+        if (edit)
+            await axios.patch(`/manager/projects/${id}`, formData, config);
+        else await axios.post('/manager/projects', formData, config);
 
         const res = await axios.get('/manager/projects');
 
@@ -92,9 +94,7 @@ export const createProject = (formData, history, edit = false) => async (
             setAlert(edit ? 'Project Updated' : 'Project Created', 'success')
         );
 
-        if (!edit) {
-            history.push('/dashboard');
-        }
+        history.push('/dashboard');
     } catch (err) {
         const errors = err.response.data.errors;
 

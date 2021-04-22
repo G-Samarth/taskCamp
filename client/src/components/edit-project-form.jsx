@@ -1,15 +1,41 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 import { createProject } from '../redux/projects/projects.actions';
 
-const ProjectForm = ({ history, createProject }) => {
+const EditProjectForm = ({ history, match, createProject }) => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
         email: '',
     });
+
+    useEffect(() => {
+        async function fetchData() {
+            let title = '',
+                description = '',
+                email = '';
+            await axios
+                .get(`/manager/projects/${match.params.projectId}`)
+                .then(async (data) => {
+                    title = data.data.title;
+                    description = data.data.description;
+                    await axios
+                        .get(`/auth/user/${data.data.assignedTo}`)
+                        .then((data) => {
+                            email = data.data.email;
+                        });
+                });
+            setFormData({
+                title: title,
+                description: description,
+                leadEmail: email,
+            });
+        }
+        fetchData();
+    }, [match.params.projectId]);
 
     const { title, description, leadEmail } = formData;
 
@@ -18,15 +44,13 @@ const ProjectForm = ({ history, createProject }) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        createProject(formData, history);
+        createProject(formData, history, match.params.projectId, true);
     };
 
     return (
         <Fragment>
             <div className="form-project p-3 bg-white border-5">
-                <h1 className="lead text-dark text-align">
-                    Create a new Project
-                </h1>
+                <h1 className="lead text-dark text-align">Edit Project</h1>
                 <form className="form-add" onSubmit={(e) => onSubmit(e)}>
                     <label className="form-add-label">Task Title</label>
                     <input
@@ -63,7 +87,7 @@ const ProjectForm = ({ history, createProject }) => {
                     <input
                         type="submit"
                         className="btn btn-primary blur-sm"
-                        value="Add"
+                        value="Save"
                     />
                 </form>
             </div>
@@ -71,4 +95,4 @@ const ProjectForm = ({ history, createProject }) => {
     );
 };
 
-export default connect(null, { createProject })(withRouter(ProjectForm));
+export default connect(null, { createProject })(withRouter(EditProjectForm));

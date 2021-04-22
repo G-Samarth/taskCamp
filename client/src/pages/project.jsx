@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import {
     getProjectById,
@@ -52,7 +52,7 @@ const ProjectPage = ({
             {currentUser.userType !== 'Resource' && (
                 <section className="resource-section">
                     {project.resources.map((resource) => (
-                        <Resource resource={resource} />
+                        <Resource key={resource._id} resource={resource} />
                     ))}
                     {!editMode && currentUser.userType === 'Lead' && (
                         <ResourceAdd />
@@ -64,12 +64,20 @@ const ProjectPage = ({
                 </section>
             )}
             {currentUser.userType === 'Manager' && (
-                <Button
-                    className="btn btn-danger blur-sm my-3"
-                    onClick={() => handleClick()}
-                >
-                    Delete
-                </Button>
+                <Fragment>
+                    <Button
+                        className="btn btn-danger blur-sm my-3"
+                        onClick={() => handleClick()}
+                    >
+                        Delete
+                    </Button>
+                    <Link
+                        to={`/edit-project/${match.params.projectId}`}
+                        className="btn btn-warning blur-sm my-3"
+                    >
+                        Edit
+                    </Link>
+                </Fragment>
             )}
             {currentUser.userType === 'Lead' && (
                 <Button

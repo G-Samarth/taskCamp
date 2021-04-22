@@ -26,7 +26,7 @@ const Login = ({ login, isAuthenticated }) => {
 
     return (
         <Fragment>
-            <div class="width-normal">
+            <div className="width-normal">
                 <div className="form-background p-4 my-2 border-3 blur-lg">
                     <h1 className="lg text-dark">Sign In</h1>
                     <p className="lead">
@@ -43,9 +43,7 @@ const Login = ({ login, isAuthenticated }) => {
                                 onChange={(e) => onChange(e)}
                                 required
                             />
-                            <label for="email" className="form-label">
-                                Email Address
-                            </label>
+                            <label className="form-label">Email Address</label>
                         </div>
                         <div className="form-group">
                             <input
@@ -53,18 +51,16 @@ const Login = ({ login, isAuthenticated }) => {
                                 type="password"
                                 placeholder="Password"
                                 name="password"
-                                minlength="6"
+                                minLength="6"
                                 value={password}
                                 onChange={(e) => onChange(e)}
                                 required
                             />
-                            <label for="password" className="form-label">
-                                Password
-                            </label>
+                            <label className="form-label">Password</label>
                         </div>
                         <input
                             type="submit"
-                            class="btn btn-primary blur-sm"
+                            className="btn btn-primary blur-sm"
                             value="Login"
                         />
                     </form>

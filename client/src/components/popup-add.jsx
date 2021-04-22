@@ -28,9 +28,7 @@ const PopupAdd = ({ match, toggleResourceAdd, addResource }) => {
                 </div>
                 <h1 className="lead text-dark text-align">Add a Resource</h1>
                 <form className="form-add" onSubmit={(e) => onSubmit(e)}>
-                    <label for="email" className="form-add-label">
-                        Email Address
-                    </label>
+                    <label className="form-add-label">Email Address</label>
                     <input
                         className="form-add-input blur-sm"
                         type="email"
@@ -41,9 +39,7 @@ const PopupAdd = ({ match, toggleResourceAdd, addResource }) => {
                         required
                     />
 
-                    <label for="task-title" className="form-add-label">
-                        Task Title
-                    </label>
+                    <label className="form-add-label">Task Title</label>
                     <input
                         className="form-add-input blur-sm"
                         type="text"
@@ -54,9 +50,7 @@ const PopupAdd = ({ match, toggleResourceAdd, addResource }) => {
                         required
                     />
 
-                    <label for="task-desc" className="form-add-label">
-                        Task Description
-                    </label>
+                    <label className="form-add-label">Task Description</label>
                     <textarea
                         className="form-add-input blur-sm"
                         placeholder="Task Description"

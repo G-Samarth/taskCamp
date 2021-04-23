@@ -3,7 +3,10 @@ import { ProjectInfoActionTypes } from '../project-info/project-info.types';
 import { setAlert } from '../alert/alert.actions';
 
 import axios from 'axios';
-import { toggleResourceAdd } from '../project-info/project-info.actions';
+import {
+    toggleResourceAdd,
+    toggleResourceInfo,
+} from '../project-info/project-info.actions';
 
 export const getAllProjects = (userType) => async (dispatch) => {
     dispatch({
@@ -112,7 +115,12 @@ export const createProject = (formData, history, id, edit = false) => async (
     }
 };
 
-export const addResource = (formData, projectId) => async (dispatch) => {
+export const addResource = (
+    formData,
+    projectId,
+    resourceId,
+    edit = false
+) => async (dispatch) => {
     try {
         const config = {
             headers: {
@@ -120,18 +128,25 @@ export const addResource = (formData, projectId) => async (dispatch) => {
             },
         };
 
-        await axios.post(`/lead/projects/${projectId}`, formData, config);
+        if (edit)
+            await axios.put(
+                `/lead/projects/${projectId}/${resourceId}`,
+                formData,
+                config
+            );
+        else await axios.post(`/lead/projects/${projectId}`, formData, config);
 
         const res = await axios.get(`/lead/projects/${projectId}`);
 
-        dispatch(toggleResourceAdd());
+        if (edit) dispatch(toggleResourceInfo());
+        else dispatch(toggleResourceAdd());
 
         dispatch({
             type: ProjectsActionTypes.GET_PROJECT,
             payload: res.data,
         });
 
-        dispatch(setAlert('New Resource Added', 'success', false));
+        if (!edit) dispatch(setAlert('New Resource Added', 'success', false));
     } catch (err) {
         const errors = err.response.data.errors;
 

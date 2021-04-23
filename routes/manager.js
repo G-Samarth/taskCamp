@@ -133,7 +133,7 @@ router.patch(
                     $set: { title, description, assignedTo: newLeadId },
                 },
                 function (err) {
-                    console.log(err);
+                    if (err) console.log(err);
                 }
             );
 

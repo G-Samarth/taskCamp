@@ -336,6 +336,7 @@
 }
 .form-add {
     text-align: center;
+    min-width: 40rem;
 }
 .form-add-label {
     display: block;

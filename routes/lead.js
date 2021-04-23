@@ -154,12 +154,78 @@ router.post(
     }
 );
 
+// @route    PUT /lead/projects/:projectId/:id
+// @desc     Update resource
+// @access   Private
+router.put(
+    '/projects/:projectId/:id',
+    [
+        auth,
+        checkLead,
+        checkObjectId('projectId'),
+        checkObjectId('id'),
+        [
+            check('taskTitle', 'Please enter at least 5 characters').isLength({
+                min: 5,
+            }),
+            check(
+                'taskDescription',
+                'Please enter at least 10 characters'
+            ).isLength({
+                min: 10,
+            }),
+        ],
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        try {
+            const leadId = req.user.id;
+            const projectId = req.params.projectId;
+            const resourceId = req.params.id;
+            const { taskTitle, taskDescription } = req.body;
+
+            const project = await Project.findById(projectId);
+
+            if (!project) {
+                return res
+                    .status(404)
+                    .json({ errors: [{ msg: 'Project Not Found' }] });
+            }
+
+            if (project.assignedTo.toString() !== leadId) {
+                return res
+                    .status(401)
+                    .json({ errors: [{ msg: 'User Not Authorized' }] });
+            }
+
+            await project.resources.forEach((resource) => {
+                if (resource.user.toString() === resourceId) {
+                    resource.taskTitle = taskTitle;
+                    resource.taskDescription = taskDescription;
+                    return;
+                }
+            });
+            await project.save();
+
+            res.json({ msg: 'Resource Updated' });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+        }
+    }
+);
+
 // @route    DELETE /lead/projects/:projectId/:id
 // @desc     Delete Resource
 // @access   Private
 router.delete(
     '/projects/:projectId/:id',
-    [auth, checkLead, checkObjectId('projectId')],
+    [auth, checkLead, checkObjectId('projectId'), checkObjectId('id')],
     async (req, res) => {
         const user = req.user.id;
         const projectId = req.params.projectId;

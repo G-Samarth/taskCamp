@@ -16,6 +16,7 @@ import PopupAdd from '../components/popup-add';
 import PopupInfo from '../components/popup-info';
 import Resource from '../components/resource';
 import Button from '../components/button';
+import Chat from '../components/chat';
 
 const ProjectPage = ({
     match,
@@ -87,6 +88,7 @@ const ProjectPage = ({
                     Edit
                 </Button>
             )}
+            {currentUser.userType === 'Resource' && <Chat />}
         </Fragment>
     );
 };

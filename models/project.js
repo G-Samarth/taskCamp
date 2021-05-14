@@ -23,6 +23,18 @@ const ProjectSchema = new mongoose.Schema({
                 type: String,
                 required: true,
             },
+            messages: [
+                {
+                    message: {
+                        name: {
+                            type: String,
+                        },
+                        text: {
+                            type: String,
+                        },
+                    },
+                },
+            ],
         },
     ],
     title: {

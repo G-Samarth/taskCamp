@@ -8,6 +8,8 @@ const INITIAL_STATE = {
     popupAdd: false,
     popupInfo: false,
     editMode: false,
+    messages: [],
+    messagesLoading: true,
 };
 
 const projectInfoReducer = (state = INITIAL_STATE, action) => {
@@ -22,6 +24,8 @@ const projectInfoReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 popupInfo: !state.popupInfo,
                 resource: action.payload,
+                messages: [],
+                messagesLoading: true,
             };
         case ProjectInfoActionTypes.TOGGLE_EDIT_MODE:
             return {
@@ -41,6 +45,19 @@ const projectInfoReducer = (state = INITIAL_STATE, action) => {
                 error: action.payload,
                 loading: false,
             };
+        case ProjectInfoActionTypes.GET_MESSAGES:
+            return {
+                ...state,
+                messages: action.payload,
+                messagesLoading: false,
+            };
+        case ProjectInfoActionTypes.MESSAGES_ERROR:
+            return {
+                ...state,
+                messages: [],
+                error: action.payload,
+                messagesLoading: false,
+            };
         case ProjectInfoActionTypes.CLEAR_INFO: //back to initial state
             return {
                 ...state,
@@ -50,6 +67,8 @@ const projectInfoReducer = (state = INITIAL_STATE, action) => {
                 popupAdd: false,
                 popupInfo: false,
                 editMode: false,
+                messages: [],
+                messagesLoading: true,
             };
         default:
             return state;

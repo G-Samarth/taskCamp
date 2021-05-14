@@ -5,6 +5,8 @@ import { withRouter } from 'react-router';
 import { toggleResourceInfo } from '../redux/project-info/project-info.actions';
 import { addResource } from '../redux/projects/projects.actions';
 
+import Chat from '../components/chat';
+
 const PopupInfo = ({
     toggleResourceInfo,
     resource,
@@ -92,6 +94,7 @@ const PopupInfo = ({
                         />
                     </form>
                 )}
+                {!editMode && <Chat />}
             </div>
         </div>
     );

@@ -20,6 +20,66 @@ export const getLeadOrManager = (userId) => async (dispatch) => {
     }
 };
 
+export const getMessages = (userType, projectId, id) => async (dispatch) => {
+    try {
+        const end = userType === 'Lead' ? id : 'chat';
+        const res = await axios.get(
+            `/${userType}/projects/${projectId}/${end}`
+        );
+
+        dispatch({
+            type: ProjectInfoActionTypes.GET_MESSAGES,
+            payload: res.data,
+        });
+    } catch (err) {
+        dispatch({
+            type: ProjectInfoActionTypes.MESSAGES_ERROR,
+            payload: {
+                msg: err.response.statusText,
+                status: err.response.status,
+            },
+        });
+    }
+};
+
+export const sendMessage =
+    (message, userType, projectId, id) => async (dispatch) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+
+            await axios.post(
+                `/${userType}/projects/${projectId}/${
+                    userType === 'Lead' ? id : 'chat'
+                }`,
+                message,
+                config
+            );
+
+            const res = await axios.get(
+                `/${userType}/projects/${projectId}/${
+                    userType === 'Lead' ? id : 'chat'
+                }`
+            );
+
+            dispatch({
+                type: ProjectInfoActionTypes.GET_MESSAGES,
+                payload: res.data,
+            });
+        } catch (err) {
+            dispatch({
+                type: ProjectInfoActionTypes.MESSAGES_ERROR,
+                payload: {
+                    msg: err.response.statusText,
+                    status: err.response.status,
+                },
+            });
+        }
+    };
+
 export const toggleResourceAdd = () => (dispatch) => {
     dispatch({
         type: ProjectInfoActionTypes.TOGGLE_RESOURCE_ADD,

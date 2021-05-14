@@ -1,4 +1,5 @@
 const express = require('express');
+const { check, validationResult } = require('express-validator');
 
 const auth = require('../middleware/auth');
 
@@ -77,6 +78,76 @@ router.get(
                 title: resProject.taskTitle,
                 description: resProject.taskDescription,
             });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+        }
+    }
+);
+
+// @route    POST /resource/projects/:projectId/chat
+// @desc     Enter a message
+// @access   Private
+router.post(
+    '/projects/:projectId/chat',
+    [
+        auth,
+        checkObjectId('projectId'),
+        [check('text', 'Chat box is empty.').not().isEmpty()],
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { text } = req.body;
+        const userId = req.user.id;
+        const projectId = req.params.projectId;
+        try {
+            const user = await User.findById(userId);
+            const name = user.name.trim();
+            const project = await Project.findById(projectId);
+
+            const message = { name, text };
+
+            project.resources.map((resource) => {
+                if (resource.user.toString() === userId) {
+                    resource.messages.push({ message });
+                }
+            });
+            await project.save();
+
+            res.json({ msg: 'Message Delivered' });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+        }
+    }
+);
+
+// @route    GET /resource/projects/:projectId/chat
+// @desc     Get all messages
+// @access   Private
+router.get(
+    '/projects/:projectId/chat',
+    [auth, checkObjectId('projectId')],
+    async (req, res) => {
+        const userId = req.user.id;
+        const projectId = req.params.projectId;
+        try {
+            const project = await Project.findById(projectId);
+
+            let messages = [];
+            project.resources.map((resource) => {
+                if (resource.user.toString() === userId) {
+                    messages = resource.messages;
+                    return;
+                }
+            });
+
+            res.json(messages);
         } catch (error) {
             console.log(error);
             res.status(500).json({ errors: [{ msg: 'Server Error' }] });

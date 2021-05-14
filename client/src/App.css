@@ -630,6 +630,72 @@ img {
     background-color: #d8d8d8;
     cursor: pointer;
 }
+.chat {
+    background-color: white;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+}
+.chat-form {
+    margin: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    height: 4rem;
+}
+.chat-form .btn {
+    margin-right: 0;
+}
+.chat-input {
+    width: 90%;
+    border: 1px solid #c2bfbf;
+    padding: 1rem 2rem;
+    font-family: inherit;
+    font-weight: 500;
+    color: inherit;
+    border-radius: 3rem;
+    outline: none;
+}
+.messages {
+    max-height: 30rem;
+    overflow: auto;
+    border-radius: 0.5rem;
+}
+.messages::-webkit-scrollbar {
+    display: none;
+}
+.message-container {
+    display: flex;
+    margin: 0.5rem 1.5rem;
+    justify-content: flex-end;
+}
+.message-box {
+    border-radius: 2rem;
+    padding: 0.5rem 2rem;
+    max-width: 75%;
+    background: #f3f3f3;
+}
+.message-text {
+    width: 100%;
+    font-size: 1.5rem;
+    word-wrap: break-word;
+    font-family: inherit;
+    font-weight: 500;
+}
+.sent-text {
+    display: flex;
+    align-items: center;
+    font-family: inherit;
+    color: #828282;
+    letter-spacing: 0.1mm;
+    font-size: 1.25rem;
+    padding-right: 1rem;
+}
+.justifyStart {
+    justify-content: flex-start;
+}
+.backgroundBlue {
+    background: #2979ff;
+    color: #f3f3f3;
+}
 .footer {
     font-size: 1.5rem;
     display: grid;

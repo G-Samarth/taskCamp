@@ -1,24 +1,24 @@
 import React from 'react';
 
-const Message = ({ message: { user, text }, name }) => {
+const Message = ({ message: { text, sender }, user, lead, resource }) => {
     let isSentByCurrentUser = false;
-    const trimmedName = name.trim().toLowerCase();
-
-    if (user === trimmedName) isSentByCurrentUser = true;
+    if (user._id === sender) isSentByCurrentUser = true;
 
     return isSentByCurrentUser ? (
-        <div className="messageContainer justifyEnd">
-            <p className="sentText pr-10">{trimmedName}</p>
-            <div className="messageBox backgroundBlue">
-                <p className="messageText colorWhite">{text}</p>
+        <div className="message-container">
+            <p className="sent-text">{user.name}</p>
+            <div className="message-box backgroundBlue">
+                <p className="message-text">{text}</p>
             </div>
         </div>
     ) : (
-        <div className="messageContainer justifyStart">
-            <div className="messageBox backgroundLight">
-                <p className="messageText colorDark">{text}</p>
+        <div className="message-container justifyStart">
+            <div className="message-box">
+                <p className="message-text text-dark">{text}</p>
             </div>
-            <p className="sentText pl-10 ">{user}</p>
+            <p className="sent-text px-1">
+                {user.userType === 'Lead' ? resource.name : lead.name}
+            </p>
         </div>
     );
 };

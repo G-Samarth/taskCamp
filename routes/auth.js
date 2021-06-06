@@ -7,6 +7,7 @@ const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 const User = require('../models/user');
+const Chat = require('../models/chat');
 const auth = require('../middleware/auth');
 const checkObjectId = require('../middleware/checkObjectId');
 
@@ -64,6 +65,9 @@ router.post(
 
             await user.save();
 
+            if (userType != 'Manager')
+                await new Chat({ user: user._id, chats: [] }).save();
+
             const payload = {
                 user: {
                     id: user.id,
@@ -120,6 +124,10 @@ router.post(
                     .status(400)
                     .json({ errors: [{ msg: 'Invalid Credentials' }] });
             }
+
+            const chat = await Chat.findOne({ user: user._id });
+            if (!chat && user.userType != 'Manager')
+                await new Chat({ user: user._id, chats: [] }).save();
 
             const payload = {
                 user: {

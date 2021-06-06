@@ -1,21 +1,38 @@
-import React from 'react';
-import ScrollToBottom from 'react-scroll-to-bottom';
+import React, { useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
 
 import Message from './message';
 
-const Messages = ({ messages, name }) => {
+const Messages = ({ messages, user, projectInfo }) => {
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView({
+            block: 'nearest',
+        });
+    };
+
+    useEffect(scrollToBottom, [messages]);
     return (
-        <ScrollToBottom className="messages">
-            {messages.map((message, i) => (
-                <div key={i}>
-                    <Message
-                        message={message}
-                        name={name}
-                    />
-                </div>
-            ))}
-        </ScrollToBottom>
+        <div className="messages">
+            {!projectInfo.loading &&
+                messages?.map((message, i) => (
+                    <div key={i}>
+                        <Message
+                            message={message}
+                            user={user}
+                            lead={projectInfo.leadOrManager}
+                            resource={projectInfo?.resource?.resourceInfo}
+                        />
+                    </div>
+                ))}
+            <div ref={messagesEndRef} />
+        </div>
     );
 };
 
-export default Messages;
+const mapStateToProps = (state) => ({
+    projectInfo: state.projectInfo,
+});
+
+export default connect(mapStateToProps)(Messages);

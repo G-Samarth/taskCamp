@@ -3,11 +3,11 @@ const { check, validationResult } = require('express-validator');
 
 const auth = require('../middleware/auth');
 const checkManager = require('../middleware/manager');
+const checkObjectId = require('../middleware/checkObjectId');
 
 const User = require('../models/user');
 const Project = require('../models/project');
-const checkObjectId = require('../middleware/checkObjectId');
-const user = require('../models/user');
+const Chat = require('../models/chat');
 
 const router = express.Router();
 
@@ -245,18 +245,31 @@ router.delete(
             const manager = await User.findById(user);
             const lead = await User.findById(project.assignedTo);
 
+            //Deleting Project from Manager's Profile
             let updatedProjects = manager.projects.filter(
                 (project) => project.project.toString() !== projectId
             );
             manager.projects = updatedProjects;
             await manager.save();
 
+            //Deleting Project from Lead's Profile
             updatedProjects = lead.projects.filter(
                 (project) => project.project.toString() !== projectId
             );
             lead.projects = updatedProjects;
             await lead.save();
 
+            //Deleting All Chats of Lead
+            const leadChat = await Chat.findOne({
+                user: project.assignedTo,
+            });
+            let updatedChats = leadChat.chats.filter(
+                (chat) => chat.project.toString() !== projectId
+            );
+            leadChat.chats = updatedChats;
+            await leadChat.save();
+
+            //Deleting Project from all Resources and their chats
             await Promise.all(
                 project.resources.map(async (resource) => {
                     const projectResource = await User.findById(resource.user);
@@ -265,6 +278,15 @@ router.delete(
                     );
                     projectResource.projects = updatedProjects;
                     await projectResource.save();
+
+                    const resourceChat = await Chat.findOne({
+                        user: resource.user,
+                    });
+                    updatedChats = resourceChat.chats.filter(
+                        (chat) => chat.project.toString() !== projectId
+                    );
+                    resourceChat.chats = updatedChats;
+                    await resourceChat.save();
                 })
             );
 

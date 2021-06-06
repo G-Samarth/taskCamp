@@ -25,9 +25,7 @@ const ProjectPage = ({
     deleteProject,
     toggleEditMode,
     projects: { project, loading },
-    showPopupAdd,
-    showPopupInfo,
-    editMode,
+    projectInfo: { popupInfo, popupAdd, editMode },
     auth: { currentUser, loading: authLoading },
 }) => {
     useEffect(() => {
@@ -58,10 +56,10 @@ const ProjectPage = ({
                     {!editMode && currentUser.userType === 'Lead' && (
                         <ResourceAdd />
                     )}
-                    {showPopupAdd && currentUser.userType === 'Lead' && (
+                    {popupAdd && currentUser.userType === 'Lead' && (
                         <PopupAdd />
                     )}
-                    {showPopupInfo && <PopupInfo />}
+                    {popupInfo && <PopupInfo />}
                 </section>
             )}
             {currentUser.userType === 'Manager' && (
@@ -88,7 +86,15 @@ const ProjectPage = ({
                     Edit
                 </Button>
             )}
-            {currentUser.userType === 'Resource' && <Chat />}
+            {!loading &&
+                !authLoading &&
+                currentUser.userType === 'Resource' && (
+                    <Chat
+                        leadId={project.assignedBy}
+                        resourceId={currentUser._id}
+                        projectId={match.params.projectId}
+                    />
+                )}
         </Fragment>
     );
 };
@@ -96,9 +102,7 @@ const ProjectPage = ({
 const mapStateToProps = (state) => ({
     auth: state.auth,
     projects: state.projects,
-    showPopupAdd: state.projectInfo.popupAdd,
-    showPopupInfo: state.projectInfo.popupInfo,
-    editMode: state.projectInfo.editMode,
+    projectInfo: state.projectInfo,
 });
 
 export default connect(mapStateToProps, {

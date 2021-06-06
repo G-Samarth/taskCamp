@@ -1,4 +1,10 @@
-const { addUser, removeUser, getUser } = require('./socket.js');
+const {
+    addUser,
+    loadMessages,
+    findConnectedUser,
+    removeUser,
+    sendMessage,
+} = require('./socket');
 
 const express = require('express');
 const dataBase = require('./config/db');
@@ -27,29 +33,50 @@ app.use('/resource', resourceRoutes);
 const port = process.env.PORT || 5000;
 
 io.on('connection', (socket) => {
-    socket.on('join', ({ name, projectId }, callback) => {
-        addUser({ id: socket.id, name, projectId });
-
-        // socket.emit('message', {
-        //     user: 'admin',
-        //     text: 'Convey your issues here',
-        // }); //remove later
-
-        socket.join(projectId);
-
+    socket.on('join', async ({ userId }, callback) => {
+        await addUser(userId, socket.id);
         callback();
     });
 
-    socket.on('sendMessage', (message, callback) => {
-        const user = getUser(socket.id);
-
-        io.to(user.projectId).emit('message', {
-            user: user.name,
-            text: message,
-        });
-
-        callback();
+    socket.on('loadMessages', async ({ userId, messagesWith, projectId }) => {
+        try {
+            const { chat } = await loadMessages({
+                userId,
+                messagesWith,
+                projectId,
+            });
+            socket.emit('messagesLoaded', { chat });
+        } catch (error) {
+            console.log(error);
+        }
     });
+
+    socket.on(
+        'sendMessage',
+        async ({ userId, sendToId, projectId, message }, callback) => {
+            try {
+                const { newMessage } = await sendMessage({
+                    userId,
+                    sendToId,
+                    projectId,
+                    message,
+                });
+
+                const receiverSocket = findConnectedUser(sendToId);
+                if (receiverSocket) {
+                    io.to(receiverSocket.socketId).emit('messageReceived', {
+                        newMessage,
+                    });
+                }
+
+                socket.emit('messageSent', { newMessage });
+
+                callback();
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    );
 
     socket.on('disconnection', () => {
         removeUser(socket.id);

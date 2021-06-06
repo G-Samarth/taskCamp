@@ -3,10 +3,11 @@ const { check, validationResult } = require('express-validator');
 
 const auth = require('../middleware/auth');
 const checkLead = require('../middleware/lead');
+const checkObjectId = require('../middleware/checkObjectId');
 
 const User = require('../models/user');
 const Project = require('../models/project');
-const checkObjectId = require('../middleware/checkObjectId');
+const Chat = require('../models/chat');
 
 const router = express.Router();
 
@@ -246,6 +247,7 @@ router.delete(
                     .json({ errors: [{ msg: 'User Not Authorized' }] });
             }
 
+            //Deleting Project from Resource's Profile
             const resource = await User.findById(resourceId);
             const updatedProjects = resource.projects.filter(
                 (project) => project.project.toString() !== projectId
@@ -253,11 +255,34 @@ router.delete(
             resource.projects = updatedProjects;
             await resource.save();
 
+            //Deleting Resource from the Project
             const updatedResources = project.resources.filter(
                 (resource) => resource.user.toString() !== resourceId
             );
             project.resources = updatedResources;
             await project.save();
+
+            //Deleting Chat from Resource's Profile
+            const resourceChat = await Chat.findOne({
+                user: resourceId,
+            });
+            let updatedChats = resourceChat.chats.filter(
+                (chat) => chat.project.toString() !== projectId
+            );
+            resourceChat.chats = updatedChats;
+            await resourceChat.save();
+
+            //Deleting Chat from Lead's Profile
+            const leadChat = await Chat.findOne({
+                user: user,
+            });
+            updatedChats = leadChat.chats.filter(
+                (chat) =>
+                    chat.project.toString() !== projectId &&
+                    chat.messagesWith.toString() !== resourceId
+            );
+            leadChat.chats = updatedChats;
+            await leadChat.save();
 
             res.json({ msg: 'Resource Deleted' });
         } catch (error) {

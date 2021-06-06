@@ -13,6 +13,7 @@ const PopupInfo = ({
     task,
     addResource,
     editMode,
+    currentUser,
     match,
 }) => {
     const [formData, setFormData] = useState({});
@@ -94,7 +95,13 @@ const PopupInfo = ({
                         />
                     </form>
                 )}
-                {!editMode && <Chat />}
+                {!editMode && currentUser.userType !== 'Manager' && (
+                    <Chat
+                        leadId={currentUser._id}
+                        resourceId={resource._id}
+                        projectId={match.params.projectId}
+                    />
+                )}
             </div>
         </div>
     );
@@ -104,6 +111,7 @@ const mapStateToProps = (state) => ({
     resource: state.projectInfo.resource.resourceInfo,
     task: state.projectInfo.resource.taskInfo,
     editMode: state.projectInfo.editMode,
+    currentUser: state.auth.currentUser,
 });
 
 export default connect(mapStateToProps, {

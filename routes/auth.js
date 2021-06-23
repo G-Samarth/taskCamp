@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const gravatar = require('gravatar');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 
@@ -10,6 +9,7 @@ const User = require('../models/user');
 const Chat = require('../models/chat');
 const auth = require('../middleware/auth');
 const checkObjectId = require('../middleware/checkObjectId');
+const { cloudinary } = require('../middleware/cloudinary.js');
 
 const router = express.Router();
 
@@ -45,18 +45,15 @@ router.post(
                     .json({ errors: [{ msg: 'User Already Exists' }] });
             }
 
-            const avatar = gravatar.url(
-                email,
-                { s: '200', r: 'pg', d: 'mm' },
-                { protocol: 'https' }
-            );
+            const defaultAvatar =
+                'https://res.cloudinary.com/dcye5wp22/image/upload/v1623077731/default_i3tcxd.jpg';
 
             user = new User({
                 name,
                 email,
                 password,
                 userType,
-                avatar,
+                avatar: defaultAvatar,
             });
 
             const salt = await bcrypt.genSalt(10);
@@ -189,5 +186,27 @@ router.get(
         }
     }
 );
+
+// @route    PUT /auth/upload
+// @desc     Update Profile Image
+// @access   Private
+router.put('/upload', auth, async (req, res) => {
+    const { uploadImage } = req.body;
+    try {
+        const user = await User.findById(req.user.id);
+
+        const uploadResponse = await cloudinary.uploader.upload(uploadImage, {
+            upload_preset: 'task-camp',
+        });
+
+        user.avatar = uploadResponse.url;
+        await user.save();
+
+        res.json({ msg: 'Profile Image Updated' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+    }
+});
 
 module.exports = router;

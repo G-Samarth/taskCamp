@@ -46,7 +46,7 @@ const PopupInfo = ({
                 </div>
                 <div className="popup-card-info">
                     <img
-                        className="round-img"
+                        className="round-img is-profile-md"
                         src={resource.avatar}
                         alt="Profile"
                     />

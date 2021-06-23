@@ -124,8 +124,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                         <Link to="/login">Sign In</Link>
                     </p>
                     <small className="xs">
-                        * This site uses Gravatar so if you want a profile
-                        image, use a Gravatar email
+                        * Set your profile image from the dashboard
                     </small>
                 </div>
             </div>

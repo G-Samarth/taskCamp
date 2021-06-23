@@ -45,7 +45,7 @@ const Resource = ({
             )}
             <div className="resource-section-card-info">
                 <img
-                    className="round-img"
+                    className="round-img is-profile-sm"
                     src={resourceInfo.avatar}
                     alt="Profile"
                 />

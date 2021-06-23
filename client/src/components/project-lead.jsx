@@ -26,7 +26,7 @@ const ProjectLead = ({
                 </h2>
                 <div>
                     <img
-                        className="round-img"
+                        className="round-img is-profile-md"
                         src={leadOrManager.avatar}
                         alt="Profile"
                     />

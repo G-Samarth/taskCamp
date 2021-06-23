@@ -6,4 +6,5 @@ export const AuthActionTypes = {
     LOGOUT: 'LOGOUT',
     USER_LOADED: 'USER_LOADED',
     AUTH_ERROR: 'AUTH_ERROR',
+    TOGGLE_PROFILE_IMAGE: 'TOGGLE_PROFILE_IMAGE',
 };

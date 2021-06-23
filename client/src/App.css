@@ -268,6 +268,21 @@
 .round-img {
     border-radius: 50%;
 }
+.is-profile-lg {
+    height: 18rem;
+    width: 18rem;
+    object-fit: cover;
+}
+.is-profile-md {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+}
+.is-profile-sm {
+    height: 12rem;
+    width: 12rem;
+    object-fit: cover;
+}
 .blur-lg {
     box-shadow: 7px 7px 10px rgba(27, 25, 25, 0.4);
 }
@@ -399,9 +414,6 @@
     font-weight: 600;
     margin-bottom: 3rem;
 }
-.popup-card-info img {
-    width: 15rem;
-}
 .popup-card-task {
     font-size: 1.5rem;
     font-weight: 500;
@@ -501,9 +513,55 @@ img {
     padding: 4rem;
     margin-bottom: 5rem;
 }
-.profile-img {
+.profile-img-div {
+    position: relative;
     margin-right: 4rem;
-    width: 18%;
+}
+.profile-img {
+    cursor: pointer;
+    display: block;
+    transition: 0.25s ease;
+    backface-visibility: hidden;
+}
+.add-profile-img {
+    cursor: pointer;
+    transition: 0.25s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+.profile-img-div:hover .profile-img {
+    opacity: 0.6;
+}
+.profile-img-div:hover .add-profile-img {
+    opacity: 0.5;
+}
+.upload-form {
+    padding: 1rem;
+    color: #4887d3;
+}
+.upload-box {
+    background-color: white;
+    outline: 2.5px dashed lightgrey;
+    outline-offset: -1.5rem;
+    padding: 10rem;
+    cursor: pointer;
+}
+.uploaded-box {
+    background-color: white;
+    outline: 2.5px dashed lightgrey;
+    outline-offset: -1.5rem;
+    padding: 5rem;
+    text-align: center;
+}
+.uploaded-img {
+    cursor: pointer;
+    height: 25rem;
+    width: 25rem;
+    object-fit: cover;
 }
 .profile-info {
     font-size: 1.5rem;
@@ -525,9 +583,7 @@ img {
     background-color: #337ace;
 }
 .project .lead-img {
-    margin-right: 4rem;
-    min-width: 15%;
-    max-width: 15%;
+    margin: auto 4rem auto 0;
 }
 .project-info {
     font-size: 1.5rem;
@@ -576,9 +632,6 @@ img {
 .project-section-top-lead {
     justify-content: space-evenly;
     text-align: center;
-}
-.project-section-top-lead img {
-    width: 35%;
 }
 .resource-section {
     display: grid;

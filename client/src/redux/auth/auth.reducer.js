@@ -5,10 +5,16 @@ const INITIAL_STATE = {
     isAuthenticated: null,
     loading: true,
     currentUser: null,
+    uploadPopup: false,
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
+        case AuthActionTypes.TOGGLE_PROFILE_IMAGE:
+            return {
+                ...state,
+                uploadPopup: !state.uploadPopup,
+            };
         case AuthActionTypes.USER_LOADED:
             return {
                 ...state,

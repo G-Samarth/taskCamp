@@ -1,4 +1,7 @@
 {
     "mongoURI": "mongodb+srv://admin-samarth:test123@cluster0.kfzc5.mongodb.net/taskCampDB?retryWrites=true&w=majority",
-    "jsonSecret": "iWantToCompleteThisBeforeNovember"
+    "jsonSecret": "iWantToCompleteThisBeforeNovember",
+    "cloudinaryName": "dcye5wp22",
+    "cloudinaryKey": "146428462391374",
+    "cloudinarySecret": "DXbN0nv7uESzrHbf58U6zwMTwIQ"
 }

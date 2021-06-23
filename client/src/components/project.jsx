@@ -32,7 +32,7 @@ const Project = ({ history, project, userType }) => {
             <div className="project border-5 blur-md" onClick={() => onClick()}>
                 <div className="lead-img">
                     <img
-                        className="round-img"
+                        className="round-img is-profile-md"
                         src={user.avatar}
                         alt="Profile"
                     />

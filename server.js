@@ -7,6 +7,7 @@ const {
 } = require('./socket');
 
 const express = require('express');
+const path = require('path');
 const dataBase = require('./config/db');
 const io = require('socket.io')(4000, {
     cors: {
@@ -31,6 +32,14 @@ app.use('/lead', leadRoutes);
 app.use('/resource', resourceRoutes);
 
 const port = process.env.PORT || 5000;
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client/build')));
+
+    app.get('*', function (req, res) {
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
+}
 
 io.on('connection', (socket) => {
     socket.on('join', async ({ userId }, callback) => {

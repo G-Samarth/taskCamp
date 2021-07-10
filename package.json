@@ -2,7 +2,6 @@
     "name": "task-camp-server",
     "version": "1.0.0",
     "description": "Web application for task and team scheduling",
-    "main": "server.js",
     "engines": {
         "node": "12.18.2",
         "npm": "6.14.5"
@@ -12,7 +11,8 @@
         "server": "nodemon server.js",
         "build": "cd client && npm run build",
         "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-        "start": "node server.js"
+        "start": "node server.js",
+        "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
     },
     "author": "Samarth Ghulyani",
     "license": "ISC",

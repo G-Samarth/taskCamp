@@ -7,15 +7,14 @@ const {
 } = require('./socket');
 
 const express = require('express');
+const http = require('http');
+const cors = require('cors');
 const path = require('path');
 const dataBase = require('./config/db');
-const io = require('socket.io')(4000, {
-    cors: {
-        origin: 'http://localhost:3000',
-    },
-});
 
 const app = express();
+const server = http.createServer(app);
+const io = require('socket.io')(server);
 
 const authRoutes = require('./routes/auth');
 const managerRoutes = require('./routes/manager');
@@ -25,6 +24,7 @@ const resourceRoutes = require('./routes/resource');
 dataBase();
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/auth', authRoutes);
 app.use('/manager', managerRoutes);
@@ -92,7 +92,7 @@ io.on('connection', (socket) => {
     });
 });
 
-app.listen(port, (error) => {
+server.listen(port, (error) => {
     if (error) console.log(error);
     console.log(`Server started on port ${port}`);
 });

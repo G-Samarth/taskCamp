@@ -11,7 +11,7 @@ const Chat = ({ leadId, resourceId, projectId, user }) => {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-        socket = io('ws://localhost:4000');
+        socket = io();
 
         socket.emit(
             'join',

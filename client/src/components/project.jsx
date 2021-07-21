@@ -39,7 +39,7 @@ const Project = ({ history, project, userType }) => {
                 </div>
 
                 <div className="project-info">
-                    <p className="md">
+                    <p className="team-lead md">
                         <strong>
                             {userType === 'Manager'
                                 ? 'Team Lead:'

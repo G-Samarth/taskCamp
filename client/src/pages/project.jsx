@@ -43,8 +43,8 @@ const ProjectPage = ({
         <Fragment>
             <section className="project-section my-3">
                 <div className="project-section-top">
-                    <ProjectInfo project={project} />
                     <ProjectLead project={project} />
+                    <ProjectInfo project={project} />
                 </div>
             </section>
 

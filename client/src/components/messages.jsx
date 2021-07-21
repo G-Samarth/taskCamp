@@ -14,7 +14,11 @@ const Messages = ({ messages, user, projectInfo }) => {
 
     useEffect(scrollToBottom, [messages]);
     return (
-        <div className="messages">
+        <div
+            className={`messages ${
+                user.userType !== 'Resource' && 'messages-sm'
+            }`}
+        >
             {!projectInfo.loading &&
                 messages?.map((message, i) => (
                     <div key={i}>
